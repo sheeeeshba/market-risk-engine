@@ -1,0 +1,18 @@
+independent_approximate_rate:
+  length: 500
+  breach_indices: [50, 150, 250, 350, 450]
+clustered_breaches:
+  flags: [false, false, false, true, true, true, true, false, false, false]
+no_breaches:
+  length: 100
+  breach_indices: []
+all_breaches:
+  length: 100
+  all: true
+missing_transition_row:
+  flags: [false, false, false, false, false]
+intentional_alignment_error:
+  forecast_date: 2024-01-02
+  expected_next_date: 2024-01-03
+  realized_date: 2024-01-04
+

@@ -1,0 +1,66 @@
+version: 1
+scenarios:
+  global_equity_selloff:
+    name: Global Equity Selloff
+    type: hypothetical
+    horizon: instantaneous_multi_factor
+    rationale: Severe global risk-off move with a Treasury and gold flight to quality.
+    source: Internal educational scenario
+    shocks:
+      SPY_RETURN: -0.20
+      QQQ_RETURN: -0.25
+      EFA_RETURN: -0.22
+      GLD_RETURN: 0.05
+      DGS5_CHANGE: -0.005
+      DGS10_CHANGE: -0.005
+      EURUSD_RETURN: -0.05
+  parallel_rates_up_100bp:
+    name: Parallel Rates +100 bps
+    type: hypothetical
+    horizon: instantaneous
+    rationale: Moderate parallel Treasury repricing.
+    source: Internal educational scenario
+    shocks: {DGS5_CHANGE: 0.01, DGS10_CHANGE: 0.01}
+  parallel_rates_up_200bp:
+    name: Parallel Rates +200 bps
+    type: hypothetical
+    horizon: instantaneous
+    rationale: Severe parallel Treasury repricing.
+    source: Internal educational scenario
+    shocks: {DGS5_CHANGE: 0.02, DGS10_CHANGE: 0.02}
+  foreign_currencies_down_10pct:
+    name: Foreign Currencies Depreciate 10% versus USD
+    type: hypothetical
+    horizon: instantaneous
+    rationale: Broad USD appreciation applied only to direct currency positions in Core.
+    source: Internal educational scenario
+    shocks: {EURUSD_RETURN: -0.10}
+  stocks_and_bonds_fall:
+    name: Stocks and Bonds Fall Together
+    type: hypothetical
+    horizon: instantaneous_multi_factor
+    rationale: Inflationary selloff with failed stock-bond diversification.
+    source: Internal educational scenario
+    shocks:
+      SPY_RETURN: -0.20
+      QQQ_RETURN: -0.20
+      EFA_RETURN: -0.20
+      GLD_RETURN: -0.07
+      DGS5_CHANGE: 0.015
+      DGS10_CHANGE: 0.015
+      EURUSD_RETURN: -0.05
+  flight_to_quality:
+    name: Flight to Quality
+    type: hypothetical
+    horizon: instantaneous_multi_factor
+    rationale: Equity selloff with falling Treasury yields and stronger gold.
+    source: Internal educational scenario
+    shocks:
+      SPY_RETURN: -0.20
+      QQQ_RETURN: -0.20
+      EFA_RETURN: -0.20
+      GLD_RETURN: 0.08
+      DGS5_CHANGE: -0.01
+      DGS10_CHANGE: -0.01
+      EURUSD_RETURN: -0.07
+

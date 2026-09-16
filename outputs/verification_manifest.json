@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "gates": {
+    "snapshot_pipeline": {
+      "command": "python -m market_risk.cli run --config config/model_config.yaml --data-mode snapshot",
+      "utc_timestamp": "2026-09-16T20:46:37.612203+00:00",
+      "exit_status": 0,
+      "git_commit": null,
+      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
+      "verified_output_paths": [
+        "reports/generated/2024-12-31_market_risk_report.md",
+        "reports/generated/2024-12-31_one_page_risk_summary.md",
+        "outputs/tables/asset_class_contributions.csv",
+        "outputs/tables/backtesting_scorecard.csv",
+        "outputs/tables/crisis_replay_summary.csv",
+        "outputs/tables/current_risk.csv",
+        "outputs/tables/daily_portfolio_pnl.csv",
+        "outputs/tables/factor_contributions.csv",
+        "outputs/tables/monte_carlo_convergence.csv",
+        "outputs/tables/monte_carlo_convergence_summary.csv",
+        "outputs/tables/negative_hedging_contributions.csv",
+        "outputs/tables/position_history.csv",
+        "outputs/tables/risk_contributions.csv",
+        "outputs/tables/rolling_forecasts.csv",
+        "outputs/tables/stress_detail.csv",
+        "outputs/tables/stress_summary.csv",
+        "outputs/tables/volatility_correlation_stress.csv",
+        "outputs/figures/01_exposure_by_asset_class_and_factor.png",
+        "outputs/figures/02_loss_distribution_var_es.png",
+        "outputs/figures/03_rolling_var_vs_realized_loss.png",
+        "outputs/figures/04_exception_timeline.png",
+        "outputs/figures/05_backtesting_scorecard.png",
+        "outputs/figures/06_position_risk_contribution.png",
+        "outputs/figures/07_stress_loss_waterfall.png",
+        "outputs/figures/08_normal_vs_crisis_correlation.png"
+      ]
+    },
+    "pytest": {
+      "command": "MPLCONFIGDIR=.mplconfig .venv/bin/pytest -q",
+      "utc_timestamp": "2026-09-16T20:46:47.635172+00:00",
+      "exit_status": 0,
+      "git_commit": null,
+      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
+      "verified_output_paths": [
+        "22 tests passed",
+        "2 non-failing seaborn PendingDeprecationWarning warnings"
+      ]
+    },
+    "ruff": {
+      "command": ".venv/bin/ruff check src tests",
+      "utc_timestamp": "2026-09-16T20:46:47.843052+00:00",
+      "exit_status": 0,
+      "git_commit": null,
+      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
+      "verified_output_paths": [
+        "All checks passed"
+      ]
+    },
+    "clean_wheel_cli": {
+      "command": "uv pip install --reinstall --no-deps .; python -m market_risk.cli --help",
+      "utc_timestamp": "2026-09-16T20:46:48.027216+00:00",
+      "exit_status": 0,
+      "git_commit": null,
+      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
+      "verified_output_paths": [
+        "wheel installed",
+        "CLI help exited 0"
+      ]
+    }
+  }
+}

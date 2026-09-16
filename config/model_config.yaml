@@ -1,0 +1,27 @@
+project_name: Multi-Asset Market Risk Engine
+portfolio_name: Canonical Multi-Asset Demonstration Portfolio
+model_version: 0.1.0
+base_currency: USD
+initial_nav: 10000000.0
+data_frequency: daily
+holding_period: one_valid_portfolio_valuation_interval
+estimation_window: 250
+confidence_levels: [0.95, 0.975, 0.99]
+primary_var_confidence: 0.99
+primary_es_confidence: 0.975
+current_monte_carlo_paths: 50000
+rolling_monte_carlo_paths: 10000
+master_seed: 42
+covariance_method: sample
+historical_weighting: equal
+rebalance_frequency: monthly
+primary_parametric_mean: zero
+primary_monte_carlo_mean: zero
+data_mode_default: snapshot
+snapshot_id: synthetic_demo_v1
+as_of_date: 2024-12-31
+report_currency: USD
+rate_forward_fill_business_days: 3
+pnl_tolerance_usd: 0.01
+component_relative_tolerance: 1.0e-6
+

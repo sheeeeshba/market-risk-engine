@@ -1,0 +1,15 @@
+{
+  "confidence": 0.99,
+  "paths": 50000,
+  "seed": 42,
+  "simulated_mean_pnl": 158.02102038034596,
+  "simulated_sigma_pnl": 39243.74961907171,
+  "covariance_diagnostics": {
+    "original_minimum_eigenvalue": 3.347894514627305e-08,
+    "repair_method": "none",
+    "maximum_absolute_adjustment": 0.0,
+    "maximum_absolute_simulated_factor_mean": 5.965553849220289e-05,
+    "maximum_relative_volatility_error": 0.006188193758264474,
+    "maximum_absolute_correlation_error": 0.007456773545644481
+  }
+}

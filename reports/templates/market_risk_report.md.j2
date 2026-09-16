@@ -1,0 +1,121 @@
+# {{ portfolio_name }} — Market Risk Report
+
+> {% if synthetic %}**SYNTHETIC DATA — NOT FOR RESUME RESULTS.** {% endif %}Educational model — not approved for regulatory capital or live trading limits.
+
+| Governance field | Value |
+|---|---|
+| Valuation date | {{ as_of_date }} |
+| Base currency | {{ base_currency }} |
+| Model version | {{ model_version }} |
+| Data source / snapshot | {{ data_source }} / `{{ snapshot_id }}` |
+| Data retrieval or creation time | {{ data_timestamp }} |
+| Lookback | {{ lookback }} valid portfolio intervals |
+| Confidence levels | {{ confidence_levels }} |
+| Monte Carlo paths / seed | {{ mc_paths }} / {{ seed }} |
+| Configuration hash | `{{ configuration_hash }}` |
+| Runtime | {{ runtime }} |
+| Generated UTC | {{ generated_utc }} |
+
+## Executive Summary
+
+- NAV: **{{ nav }}**; gross funded exposure: **{{ gross_exposure }}**; overlay notional: **{{ overlay_notional }}**.
+- Primary 99% VaR ranges from **{{ var_low }}** to **{{ var_high }}** across the three Core models.
+- Primary 97.5% ES ranges from **{{ es_low }}** to **{{ es_high }}**.
+- Largest Parametric component-VaR driver: **{{ top_risk_driver }}** ({{ top_risk_contribution }}).
+- Worst configured deterministic stress: **{{ worst_stress }}**, loss **{{ worst_stress_loss }}** ({{ worst_stress_pct }} of NAV).
+- Backtesting generated **{{ forecast_count }}** leak-free next-interval forecasts per model; interpretation is subject to the warnings below.
+
+## Portfolio and Sensitivities
+
+{{ portfolio_table }}
+
+Total signed DV01 reports the approximate loss for a +1 bp parallel yield move: **{{ total_dv01 }}**. A positive DV01 is a loss sensitivity for the long positive-duration Core bond book.
+
+![Exposure by asset class and factor]({{ figure_exposures }})
+
+## Current VaR and Expected Shortfall
+
+{{ current_risk_table }}
+
+Historical ES uses exactly {{ historical_tail_mass }} effective observations at the primary ES confidence. Small effective tail mass makes the estimate unstable; 99% ES from 250 observations would use only 2.5 effective observations.
+
+### Monte Carlo Convergence
+
+{{ convergence_table }}
+
+The maximum absolute 50,000-versus-100,000-path difference across three seeds is {{ max_var_convergence_difference }} for 99% VaR and {{ max_es_convergence_difference }} for ES. The approximate 2% VaR convergence target is evaluated per seed in the table.
+
+![Loss distribution]({{ figure_loss_distribution }})
+
+## Risk Contributions
+
+{{ position_contribution_table }}
+
+The position contributions reconcile to total Parametric VaR. Negative contributions are retained as genuine diversification or hedge effects.
+
+Top-three component-VaR concentration is **{{ top_three_concentration }}**. Negative primary Parametric contributions: **{{ negative_hedges }}**.
+
+### Asset-Class Contributions
+
+{{ asset_class_contribution_table }}
+
+### Factor Contributions
+
+{{ factor_contribution_table }}
+
+![Position risk contribution]({{ figure_contributions }})
+
+## Rolling Forecasts and Backtesting
+
+{{ backtest_table }}
+
+Statistical non-rejection does not prove model correctness. Kupiec tests unconditional coverage; Christoffersen tests exception independence. This project does not claim a complete regulatory ES backtest.
+
+{% for warning in backtest_warnings %}- Warning: `{{ warning }}`
+{% endfor %}
+
+![Rolling VaR]({{ figure_rolling_var }})
+
+![Exception timeline]({{ figure_exceptions }})
+
+![Backtesting scorecard]({{ figure_backtesting_scorecard }})
+
+## Hypothetical Stress Tests
+
+{{ stress_table }}
+
+Scenario gains remain negative losses; they are not floored to zero. ETF shocks apply to USD-listed total-return factors, and EURUSD shocks apply only to the direct FX overlay.
+
+![Stress waterfall]({{ figure_stress_waterfall }})
+
+## Historical-Crisis Replay Archive
+
+{{ crisis_table }}
+
+These are multi-day scenario replays and are not comparable horizons to the one-valid-interval VaR. {% if synthetic %}The archive currently contains artificial shocks only and cannot be described as observed crisis performance.{% endif %}
+
+## Volatility and Correlation Stress
+
+{{ volatility_stress_table }}
+
+A pure volatility change creates no immediate deterministic P&L for this Core portfolio. It changes the distribution used to estimate VaR and ES.
+
+![Correlation comparison]({{ figure_correlations }})
+
+## Data Quality and Controls
+
+- Required ETF and FX factors are never forward-filled or silently replaced with zero.
+- Treasury forward-fill is limited to three business days and exposed through quality flags.
+- Position P&L reconciles to portfolio P&L, and funded holdings reconcile to NAV.
+- Forecast windows end on the forecast date; realized P&L is the next valid portfolio interval.
+- Random seeds, configuration hash, snapshot ID, runtime versions, and generated files are recorded.
+
+## Assumptions and Limitations
+
+- Core ETFs are synthetic adjusted-total-return holdings; fees, taxes, and trading costs are omitted.
+- Bonds use constant duration and convexity, with no coupon/carry, pull-to-par, or daily sensitivity ageing.
+- Cash earns zero; the FX overlay is zero funded value and settles daily P&L into cash.
+- Normal Parametric and Monte Carlo models assume stable covariance and do not capture skewness or fat tails.
+- Historical estimates depend on a short 250-observation window and sparse tail mass.
+- No square-root-of-time scaling is used; one day means one valid common valuation interval.
+- {% if synthetic %}All numerical results in this report are engineering demonstrations on artificial data and are blocked from resume claims.{% else %}Provider and snapshot limitations remain documented in the model methodology.{% endif %}
