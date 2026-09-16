@@ -14,7 +14,7 @@
 | Monte Carlo paths / seed | 50,000 / 42 |
 | Configuration hash | `900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09` |
 | Runtime | python 3.14.2, numpy 2.5.3, pandas 2.3.3, scipy 1.18.1, matplotlib 3.11.2 |
-| Generated UTC | 2026-09-16T20:46:37.596624+00:00 |
+| Generated UTC | 2026-09-16T21:00:20.591910+00:00 |
 
 ## Executive Summary
 

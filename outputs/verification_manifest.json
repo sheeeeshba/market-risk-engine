@@ -3,10 +3,10 @@
   "gates": {
     "snapshot_pipeline": {
       "command": "python -m market_risk.cli run --config config/model_config.yaml --data-mode snapshot",
-      "utc_timestamp": "2026-09-16T20:46:37.612203+00:00",
+      "utc_timestamp": "2026-09-16T21:00:20.606825+00:00",
       "exit_status": 0,
-      "git_commit": null,
-      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "git_commit": "1965cc4e79200557066b531ea8f760034b805121",
+      "workspace_tree_hash": "b8808cefc920cdddb1e9b8527c21fde087ce62af47d0bf13161c228b7901b059",
       "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
@@ -39,10 +39,10 @@
     },
     "pytest": {
       "command": "MPLCONFIGDIR=.mplconfig .venv/bin/pytest -q",
-      "utc_timestamp": "2026-09-16T20:46:47.635172+00:00",
+      "utc_timestamp": "2026-09-16T21:01:00.845151+00:00",
       "exit_status": 0,
-      "git_commit": null,
-      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "git_commit": "1965cc4e79200557066b531ea8f760034b805121",
+      "workspace_tree_hash": "b8808cefc920cdddb1e9b8527c21fde087ce62af47d0bf13161c228b7901b059",
       "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
@@ -52,10 +52,10 @@
     },
     "ruff": {
       "command": ".venv/bin/ruff check src tests",
-      "utc_timestamp": "2026-09-16T20:46:47.843052+00:00",
+      "utc_timestamp": "2026-09-16T21:01:01.045545+00:00",
       "exit_status": 0,
-      "git_commit": null,
-      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "git_commit": "1965cc4e79200557066b531ea8f760034b805121",
+      "workspace_tree_hash": "b8808cefc920cdddb1e9b8527c21fde087ce62af47d0bf13161c228b7901b059",
       "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
@@ -63,11 +63,11 @@
       ]
     },
     "clean_wheel_cli": {
-      "command": "uv pip install --reinstall --no-deps .; python -m market_risk.cli --help",
-      "utc_timestamp": "2026-09-16T20:46:48.027216+00:00",
+      "command": "uv pip install --python .venv/bin/python --reinstall --no-deps . && .venv/bin/python -m market_risk.cli --help",
+      "utc_timestamp": "2026-09-16T21:01:01.220604+00:00",
       "exit_status": 0,
-      "git_commit": null,
-      "workspace_tree_hash": "6943f292a7e40a7649de9d5863065d60fc8796a8f5b8f872ee2f756b43cb5575",
+      "git_commit": "1965cc4e79200557066b531ea8f760034b805121",
+      "workspace_tree_hash": "b8808cefc920cdddb1e9b8527c21fde087ce62af47d0bf13161c228b7901b059",
       "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
