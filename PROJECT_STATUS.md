@@ -4,12 +4,12 @@ Last updated: 2026-09-16 (Europe/Prague)
 
 ## Current State
 
-- The workspace was empty at project start and is not a Git repository.
+- The project is version-controlled and published at `https://github.com/sheeeeshba/market-risk-engine`.
 - No `outputs/market_risk_engine_blueprint.md` existed; the attached master prompt is authoritative.
 - A complete Core engineering path now runs from the bundled deterministic factor snapshot through P&L, three VaR/ES models, rolling backtests, contributions, stresses, eight figures, a one-page summary, and a management report.
 - The current snapshot is artificial and every generated presentation output is watermarked `SYNTHETIC DATA — NOT FOR RESUME RESULTS`.
-- Historical conclusions, a recruiter screenshot, case-study market metrics, and resume bullets remain blocked until a permitted real-data snapshot is verified.
-- The normal wheel install and CLI were verified. A hosted clean-Colab run remains blocked until the repository has a public clone URL.
+- Historical conclusions, a recruiter screenshot, and case-study market metrics remain blocked until a permitted real-data snapshot is verified; engineering-only CV bullets are ready.
+- The normal wheel install and CLI were verified. A public Colab launch URL is available, while a hosted clean-Colab execution remains an explicit verification follow-up.
 
 ## Confirmed Test Seams
 
@@ -39,8 +39,8 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 | 5 — Rolling forecasts | COMPLETE FOR SYNTHETIC | 270 aligned forecasts/model, statistical edge fixtures, no-future-input validation |
 | 6 — Contributions and full stress | COMPLETE FOR SYNTHETIC | Position/asset-class/factor tables, six scenarios, distributional stress, three artificial replays |
 | 7 — Automated reporting | COMPLETE FOR SYNTHETIC | Strict template, 8 PNGs, 15+ evidence files, warnings and watermarks |
-| 8 — Refactor and reproduce | PARTIAL | 22 tests and clean wheel/CLI pass; hosted Colab run not yet verified |
-| 9 — Recruiter package | BLOCKED ON REAL DATA AND COLAB | Evidence-limited drafts exist and are prominently blocked |
+| 8 — Refactor and reproduce | PARTIAL | 22 tests and clean wheel/CLI pass; public repository available; hosted Colab execution not yet verified |
+| 9 — Recruiter package | ENGINEERING VERSION COMPLETE | Public GitHub repository and evidence-limited CV/LinkedIn copy ready; market-result claims remain blocked on real data |
 
 ## Latest Executed Results
 
@@ -56,8 +56,7 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 - Live retrieval was not executed because this workspace has no user FRED credential; the adapter is implemented but not acceptance-tested.
 - Artificial crisis shocks validate calculation and presentation only, not historical replay accuracy.
 - Backtesting has 2.7 expected 99% exceptions per model and therefore emits low-power warnings.
-- No Git commit hash is available; the manifest records a workspace tree hash instead.
-- Colab setup requires a published repository URL supplied through the `MARKET_RISK_REPO_URL` Secret.
+- The public notebook defaults to the published repository; a clean hosted Colab execution has not yet been recorded in the manifest.
 
 ## Progress Contract
 
@@ -66,5 +65,4 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 3. Commands executed: normal wheel install, exact CLI snapshot run, pytest, Ruff, JSON/placeholder scans, and visual inspection of key figures.
 4. Actual result: Core mechanics work and reconcile; recruiter/historical evidence is deliberately not claimed.
 5. Assumptions: zero cash return, constant bond sensitivities between rebalances, zero-mean primary Normal models, sample covariance, and artificial offline factors.
-6. Next gate: publish the repository, create a permitted real snapshot with provenance, reproduce crisis endpoints, run the notebook in fresh Colab, replace watermarked outputs, and rerun all manifest gates.
-
+6. Next gate: create a permitted real snapshot with provenance, reproduce crisis endpoints, run the notebook in fresh Colab, replace watermarked outputs, and rerun all manifest gates.

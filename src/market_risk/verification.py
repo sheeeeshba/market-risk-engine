@@ -16,17 +16,25 @@ def workspace_tree_hash(root: str | Path) -> str:
     root = Path(root)
     ignored_parts = {
         ".git",
+        ".mplconfig",
+        ".mypy_cache",
         ".venv",
         ".uv-cache",
         "__pycache__",
         ".pytest_cache",
         ".ruff_cache",
+        "build",
+        "dist",
     }
     ignored_roots = {root / "outputs", root / "reports" / "generated"}
     digest = hashlib.sha256()
     files = []
     for path in root.rglob("*"):
-        if not path.is_file() or ignored_parts.intersection(path.parts):
+        if (
+            not path.is_file()
+            or ignored_parts.intersection(path.parts)
+            or any(part.endswith(".egg-info") for part in path.parts)
+        ):
             continue
         if any(path == ignored or ignored in path.parents for ignored in ignored_roots):
             continue
