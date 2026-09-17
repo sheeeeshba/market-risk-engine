@@ -10,6 +10,8 @@ Validation covers the artificial offline snapshot and the Core calculation inter
 - Full pytest suite completed successfully; see `outputs/verification_manifest.json` for the current recorded gate after the final test run.
 - The integration test created eight figures and a report from a small portfolio flow.
 - The production snapshot run created the required report, 11 CSV tables, and eight PNG figures.
+- Twenty-eight automated tests pass, including the typed platform layer and Streamlit interaction suite.
+- Desktop and 430-pixel mobile browser checks found no text/chart-label overlaps, console errors, or page errors after the responsive layout fixes.
 
 ## Covered Controls
 
@@ -23,6 +25,7 @@ Validation covers the artificial offline snapshot and the Core calculation inter
 - Six scenario reconciliation and distributional-stress semantics.
 - Kupiec and Christoffersen zero/all/missing-transition handling and intentional date-alignment failure.
 - End-to-end artifact existence and report metadata propagation.
+- Dashboard tab availability, configurable view controls, download surfaces, and live-mode credential gating.
 
 ## Observed Warnings
 
@@ -36,4 +39,3 @@ Validation covers the artificial offline snapshot and the Core calculation inter
 - Clean hosted Google Colab execution from a published public repository.
 - Live-mode provider integration with a user FRED key.
 - Any claim of production, regulatory, or resume-ready historical performance.
-

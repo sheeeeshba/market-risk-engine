@@ -218,7 +218,7 @@ def download_live_factors(
         import yfinance as yf
     except ImportError as error:
         raise RuntimeError(
-            "Live mode requires the optional dependency: install with `pip install -e '.[live]'`."
+            "Live mode requires the optional dependency: install with `pip install '.[live]'`."
         ) from error
     api_key = fred_api_key or os.getenv("FRED_API_KEY")
     if not api_key:
@@ -272,7 +272,7 @@ def download_live_factors(
         )
         request = urllib.request.Request(
             f"https://api.stlouisfed.org/fred/series/observations?{parameters}",
-            headers={"User-Agent": "multi-asset-market-risk-engine/0.1.0"},
+            headers={"User-Agent": "multi-asset-market-risk-engine/1.0.0"},
         )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:

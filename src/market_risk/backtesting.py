@@ -158,7 +158,7 @@ def rolling_var_forecasts(
     confidence: float = 0.99,
     monte_carlo_paths: int = 10_000,
     master_seed: int = 42,
-    model_version: str = "0.1.0",
+    model_version: str = "1.0.0",
 ) -> pd.DataFrame:
     """Generate Historical, Parametric, and Monte Carlo forecasts after close at t."""
 
@@ -239,4 +239,3 @@ def backtest_scorecard(forecasts: pd.DataFrame) -> pd.DataFrame:
         result = conditional_coverage_test(group["exception"].to_numpy(), float(confidence))
         rows.append({"model": model, "confidence": confidence, **result})
     return pd.DataFrame(rows).set_index(["model", "confidence"])
-

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 from .config import project_root
@@ -23,12 +25,35 @@ def build_parser() -> argparse.ArgumentParser:
     )
     snapshot.add_argument("--periods", type=int, default=520)
     snapshot.add_argument("--seed", type=int, default=42)
+
+    app = subparsers.add_parser("app", help="Launch the interactive Streamlit dashboard.")
+    app.add_argument("--port", type=int, default=8501)
+    app.add_argument("--address", default="localhost")
+    app.add_argument("--no-browser", action="store_true")
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     root = project_root()
+    if args.command == "app":
+        app_path = Path.cwd() / "streamlit_app.py"
+        if not app_path.is_file():
+            app_path = root / "streamlit_app.py"
+        command = [
+            sys.executable,
+            "-m",
+            "streamlit",
+            "run",
+            str(app_path),
+            "--server.address",
+            args.address,
+            "--server.port",
+            str(args.port),
+        ]
+        if args.no_browser:
+            command.extend(["--server.headless", "true"])
+        return subprocess.call(command)
     if args.command == "make-synthetic-snapshot":
         result = create_synthetic_snapshot(root, args.periods, args.seed)
     else:
@@ -42,4 +67,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

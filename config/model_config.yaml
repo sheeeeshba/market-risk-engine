@@ -1,6 +1,6 @@
 project_name: Multi-Asset Market Risk Engine
 portfolio_name: Canonical Multi-Asset Demonstration Portfolio
-model_version: 0.1.0
+model_version: 1.0.0
 base_currency: USD
 initial_nav: 10000000.0
 data_frequency: daily
@@ -24,4 +24,3 @@ report_currency: USD
 rate_forward_fill_business_days: 3
 pnl_tolerance_usd: 0.01
 component_relative_tolerance: 1.0e-6
-

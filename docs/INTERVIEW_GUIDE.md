@@ -42,9 +42,8 @@ Volatility is a property of a distribution, not a realized deterministic shock. 
 
 ## 11. What Python design choice matters most?
 
-Finance logic is behind small public interfaces that return data rather than hiding state in notebook cells. The same interfaces serve the CLI, notebook, and tests. Dependencies and configuration are inputs, deterministic results are outputs, and side effects are concentrated in snapshot/report adapters.
+Finance logic is behind small public interfaces that return data rather than hiding state in notebook cells. `MarketRiskPlatform` validates the evidence and returns one typed result used by the Streamlit UI and downloads. The same engine interfaces serve the CLI, notebook, and tests. Dependencies and configuration are inputs, deterministic results are outputs, and side effects are concentrated in snapshot/report adapters.
 
 ## 12. What would you improve first?
 
 Replace the artificial snapshot with permitted real data and reproduce crisis endpoint shocks. Then extend out-of-sample evidence before considering one challenger such as EWMA. Full bond cash-flow repricing and stronger operational governance come before any production claim.
-

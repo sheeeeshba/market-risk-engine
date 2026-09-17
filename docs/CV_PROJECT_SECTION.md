@@ -4,18 +4,19 @@ The bullets below are safe to use now because they describe verified engineering
 
 ## Recommended CV Version
 
-**Multi-Asset Market Risk Engine | Python, NumPy, pandas, SciPy, VaR, Expected Shortfall**  
+**Multi-Asset Market Risk Platform | Python, Streamlit, Plotly, pandas, SciPy**
 GitHub: `github.com/sheeeeshba/market-risk-engine`
 
 - Built a modular Python market-risk engine for an eight-position, seven-factor portfolio, implementing Historical Simulation, Parametric Normal, and full-revaluation Monte Carlo VaR and Expected Shortfall at 95%, 97.5%, and 99% confidence levels.
 - Developed a leak-free rolling backtesting framework with next-valid-date P&L alignment, Kupiec coverage and Christoffersen independence tests, exception diagnostics, and explicit low-power controls.
 - Implemented duration-convexity bond P&L, direct FX-overlay accounting, additive position/asset-class/factor risk contributions, six hypothetical scenarios, and volatility/correlation stress testing.
-- Automated a versioned management-style report with eight visualizations, reproducibility hashes, deterministic seeds, a verification manifest, and 22 automated tests.
+- Built a responsive Streamlit risk-control workspace with configurable model, confidence, horizon, USD/%NAV, and driver views plus downloadable evidence bundles.
+- Automated a versioned management report with eight generated figures, reproducibility hashes, deterministic seeds, a verification manifest, CI, and 28 automated tests.
 
 ## Compact Two-Bullet Version
 
-- Built a tested Python market-risk engine implementing three VaR/ES approaches, rolling backtesting, duration-convexity and FX P&L, additive risk contributions, and six stress scenarios for a configurable multi-asset portfolio.
-- Automated eight risk visualizations and a management report with deterministic snapshots, seed and configuration controls, GitHub Actions CI, and 22 automated tests.
+- Built a Python/Streamlit market-risk platform implementing three VaR/ES approaches, rolling backtesting, duration-convexity and FX P&L, additive risk contributions, and six stress scenarios.
+- Delivered configurable Plotly risk views, downloadable management evidence, deterministic snapshots, GitHub Actions CI, and 28 automated tests.
 
 ## LinkedIn Project Description
 
@@ -23,7 +24,7 @@ Designed and validated an educational multi-asset market-risk engine that conver
 
 ## ATS Keywords
 
-Market Risk; Portfolio Risk; Value at Risk; Expected Shortfall; Historical Simulation; Monte Carlo; Parametric VaR; Backtesting; Kupiec Test; Christoffersen Test; Stress Testing; Duration; Convexity; DV01; FX Risk; Risk Contributions; Python; NumPy; pandas; SciPy; pytest; GitHub Actions.
+Market Risk; Portfolio Risk; Value at Risk; Expected Shortfall; Historical Simulation; Monte Carlo; Parametric VaR; Backtesting; Kupiec Test; Christoffersen Test; Stress Testing; Duration; Convexity; DV01; FX Risk; Risk Contributions; Python; Streamlit; Plotly; NumPy; pandas; SciPy; pytest; GitHub Actions.
 
 ## Claims to Add Only After the Real-Data Gate
 

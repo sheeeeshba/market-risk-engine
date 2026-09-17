@@ -67,7 +67,12 @@ def create_synthetic_snapshot(
     return {"factors_path": str(factors_path), "metadata_path": str(metadata_path), **metadata}
 
 
-def _load_factor_data(root: Path, data_mode: str, model_config: dict[str, Any]) -> tuple[pd.DataFrame, dict[str, Any]]:
+def _load_factor_data(
+    root: Path,
+    data_mode: str,
+    model_config: dict[str, Any],
+    fred_api_key: str | None = None,
+) -> tuple[pd.DataFrame, dict[str, Any]]:
     if data_mode == "synthetic_demo":
         create_synthetic_snapshot(root, periods=520, seed=int(model_config["master_seed"]))
     if data_mode in {"snapshot", "synthetic_demo"}:
@@ -85,6 +90,7 @@ def _load_factor_data(root: Path, data_mode: str, model_config: dict[str, Any]) 
         factors, quality, metadata = download_live_factors(
             start_date="2007-01-01",
             end_date=None,
+            fred_api_key=fred_api_key,
             max_rate_fill_business_days=int(model_config["rate_forward_fill_business_days"]),
         )
         processed = root / "data/processed"
@@ -101,6 +107,8 @@ def _load_factor_data(root: Path, data_mode: str, model_config: dict[str, Any]) 
 def run_pipeline(
     model_config_path: str | Path,
     data_mode: str | None = None,
+    *,
+    fred_api_key: str | None = None,
 ) -> dict[str, str]:
     """Run the validated snapshot pipeline and return generated artifact paths."""
 
@@ -112,7 +120,9 @@ def run_pipeline(
     crisis_config = load_yaml(root / "config/historical_crises.yaml")
     config_hash = configuration_hash(model_config, portfolio_config, stress_config, crisis_config)
     selected_mode = data_mode or str(model_config["data_mode_default"])
-    factors, data_metadata = _load_factor_data(root, selected_mode, model_config)
+    factors, data_metadata = _load_factor_data(
+        root, selected_mode, model_config, fred_api_key=fred_api_key
+    )
     synthetic = data_metadata.get("data_classification") == SYNTHETIC_WATERMARK
 
     window = int(model_config["estimation_window"])

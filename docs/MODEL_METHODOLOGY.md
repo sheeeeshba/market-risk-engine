@@ -61,5 +61,5 @@ Six versioned hypothetical scenarios fully revalue positions and preserve gains 
 
 ## Change Log
 
+- 1.0.0: typed platform/application boundary, interactive Risk Ledger review workspace, configurable presentation controls, evidence bundle downloads, and expanded UI validation.
 - 0.1.0: canonical Core accounting, three VaR/ES models, rolling backtests, contributions, stress engine, automated report, tests, and synthetic offline snapshot.
-

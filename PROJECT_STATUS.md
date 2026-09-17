@@ -1,14 +1,15 @@
 # Project Status
 
-Last updated: 2026-09-16 (Europe/Prague)
+Last updated: 2026-09-17 (Europe/Prague)
 
 ## Current State
 
 - The project is version-controlled and published at `https://github.com/sheeeeshba/market-risk-engine`.
 - No `outputs/market_risk_engine_blueprint.md` existed; the attached master prompt is authoritative.
 - A complete Core engineering path now runs from the bundled deterministic factor snapshot through P&L, three VaR/ES models, rolling backtests, contributions, stresses, eight figures, a one-page summary, and a management report.
+- Version 1.0 adds the Risk Ledger application: a typed platform interface, responsive Streamlit workspace, seven review tabs, configurable charts, and complete evidence downloads.
 - The current snapshot is artificial and every generated presentation output is watermarked `SYNTHETIC DATA — NOT FOR RESUME RESULTS`.
-- Historical conclusions, a recruiter screenshot, and case-study market metrics remain blocked until a permitted real-data snapshot is verified; engineering-only CV bullets are ready.
+- Historical conclusions and case-study market metrics remain blocked until a permitted real-data snapshot is verified; an explicitly watermarked recruiter screenshot and engineering-only CV bullets are ready.
 - The normal wheel install and CLI were verified. A public Colab launch URL is available, while a hosted clean-Colab execution remains an explicit verification follow-up.
 
 ## Confirmed Test Seams
@@ -39,14 +40,15 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 | 5 — Rolling forecasts | COMPLETE FOR SYNTHETIC | 270 aligned forecasts/model, statistical edge fixtures, no-future-input validation |
 | 6 — Contributions and full stress | COMPLETE FOR SYNTHETIC | Position/asset-class/factor tables, six scenarios, distributional stress, three artificial replays |
 | 7 — Automated reporting | COMPLETE FOR SYNTHETIC | Strict template, 8 PNGs, 15+ evidence files, warnings and watermarks |
-| 8 — Refactor and reproduce | PARTIAL | 22 tests and clean wheel/CLI pass; public repository available; hosted Colab execution not yet verified |
-| 9 — Recruiter package | ENGINEERING VERSION COMPLETE | Public GitHub repository and evidence-limited CV/LinkedIn copy ready; market-result claims remain blocked on real data |
+| 8 — Refactor and reproduce | COMPLETE LOCALLY; HOSTED COLAB FOLLOW-UP | 28 tests, lint, clean install/CLI, platform/UI tests, desktop/mobile browser checks; hosted Colab execution not yet verified |
+| 9 — Recruiter package | ENGINEERING VERSION COMPLETE | Public GitHub repository, dashboard screenshot, and evidence-limited CV/LinkedIn copy ready; market-result claims remain blocked on real data |
 
 ## Latest Executed Results
 
 - Snapshot pipeline command: exit status 0.
-- Pytest: 22 passed; two non-failing Seaborn pending-deprecation warnings.
+- Pytest: 28 passed; two non-failing Seaborn pending-deprecation warnings.
 - Ruff: all checks passed.
+- Browser UX check: desktop and 430-pixel mobile views rendered with no detected text/chart-label overlaps, console errors, or page errors.
 - Monte Carlo convergence: all three 50k-versus-100k 99% VaR comparisons are below the approximate 2% target; ES differences are reported separately.
 - Outputs: one multi-section report, one-page summary, eight figures, current/rolling/stress/contribution/convergence tables, diagnostics JSON, and verification manifest.
 
@@ -60,9 +62,9 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 
 ## Progress Contract
 
-1. Files created/changed: modular package, configurations, tests/fixtures, deterministic snapshot, notebook, report template, generated evidence, README, methodology, validation, limitation, case-study, interview, and blocked resume documentation.
-2. Functionality completed: full Core engineering flow on synthetic data plus optional live adapter.
-3. Commands executed: normal wheel install, exact CLI snapshot run, pytest, Ruff, JSON/placeholder scans, and visual inspection of key figures.
+1. Files created/changed: modular package, typed application layer, Streamlit dashboard, configurations, tests/fixtures, deterministic snapshot, notebook, report template, generated evidence, README, deployment/security guides, case study, and CV material.
+2. Functionality completed: full Core engineering flow on synthetic data, configurable review workspace, downloads, and optional guarded live adapter.
+3. Commands executed: normal install, exact CLI snapshot run, pytest with coverage, Ruff, Streamlit AppTest, and desktop/mobile browser interaction checks.
 4. Actual result: Core mechanics work and reconcile; recruiter/historical evidence is deliberately not claimed.
 5. Assumptions: zero cash return, constant bond sensitivities between rebalances, zero-mean primary Normal models, sample covariance, and artificial offline factors.
 6. Next gate: create a permitted real snapshot with provenance, reproduce crisis endpoints, run the notebook in fresh Colab, replace watermarked outputs, and rerun all manifest gates.

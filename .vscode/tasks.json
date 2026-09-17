@@ -1,0 +1,31 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Risk Engine: install",
+      "type": "shell",
+      "command": "python3 -m venv .venv && .venv/bin/python -m pip install '.[dev]'",
+      "problemMatcher": []
+    },
+    {
+      "label": "Risk Engine: dashboard",
+      "type": "shell",
+      "command": ".venv/bin/python -m streamlit run streamlit_app.py",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Risk Engine: pipeline",
+      "type": "shell",
+      "command": ".venv/bin/python -m market_risk run --config config/model_config.yaml --data-mode snapshot",
+      "problemMatcher": []
+    },
+    {
+      "label": "Risk Engine: tests",
+      "type": "shell",
+      "command": ".venv/bin/python -m pytest -q",
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

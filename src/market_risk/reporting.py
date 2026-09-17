@@ -75,7 +75,7 @@ def create_core_figures(
     figure, axis = plt.subplots(figsize=(11, 6))
     sns.histplot(historical_losses, bins=45, stat="density", color=COLORS[0], alpha=0.45, ax=axis)
     primary = current_risk[current_risk["confidence"] == current_risk["confidence"].max()]
-    for color, (_, row) in zip(COLORS[1:], primary.iterrows()):
+    for color, (_, row) in zip(COLORS[1:], primary.iterrows(), strict=False):
         axis.axvline(row["var"], color=color, linewidth=2, label=f"{row['model']} VaR")
         axis.axvline(row["es"], color=color, linewidth=1.3, linestyle="--", label=f"{row['model']} ES")
     axis.set(
@@ -92,7 +92,9 @@ def create_core_figures(
     figure, axis = plt.subplots(figsize=(13, 6))
     realized = forecasts.drop_duplicates("forecast_date").set_index("realized_date")["realized_loss"]
     axis.plot(realized.index, realized, color="#333333", linewidth=0.9, label="Realized hypothetical loss")
-    for color, (model, group) in zip(COLORS, forecasts.groupby("model", sort=False)):
+    for color, (model, group) in zip(
+        COLORS, forecasts.groupby("model", sort=False), strict=False
+    ):
         axis.plot(group["realized_date"], group["var"], color=color, linewidth=1.25, label=f"{model} VaR")
     axis.axhline(0.0, color="#777777", linewidth=0.7)
     axis.set(title="Rolling 99% VaR versus Next-Interval Loss", xlabel="Realized date", ylabel="USD loss")
@@ -103,7 +105,9 @@ def create_core_figures(
 
     # 4. Exception timeline and breach magnitude.
     figure, axis = plt.subplots(figsize=(13, 5))
-    for color, (model, group) in zip(COLORS, forecasts.groupby("model", sort=False)):
+    for color, (model, group) in zip(
+        COLORS, forecasts.groupby("model", sort=False), strict=False
+    ):
         breaches = group[group["exception"]]
         axis.scatter(
             breaches["realized_date"],
@@ -211,4 +215,3 @@ def runtime_versions() -> dict[str, str]:
         "scipy": scipy.__version__,
         "matplotlib": mpl.__version__,
     }
-

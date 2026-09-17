@@ -3,5 +3,9 @@
 Educational model — not approved for regulatory capital or live trading limits.
 """
 
-__version__ = "0.1.0"
+from .models import MarketRiskAnalysis, RiskHeadline
+from .platform import MarketRiskPlatform
 
+__all__ = ["MarketRiskAnalysis", "MarketRiskPlatform", "RiskHeadline"]
+
+__version__ = "1.0.0"
