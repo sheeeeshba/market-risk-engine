@@ -3,11 +3,11 @@
   "gates": {
     "snapshot_pipeline": {
       "command": "python -m market_risk.cli run --config config/model_config.yaml --data-mode snapshot",
-      "utc_timestamp": "2026-09-16T21:03:07.474417+00:00",
+      "utc_timestamp": "2026-09-17T01:00:02.473149+00:00",
       "exit_status": 0,
-      "git_commit": "213dada89d0df3d6e071b5ad1000027ed2aff506",
-      "workspace_tree_hash": "217c1f3a67b0cd6589b62aa7c51e4b0dbf0bc2a7f584499388e5abd6e47e2fd1",
-      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
+      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
+      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
         "reports/generated/2024-12-31_market_risk_report.md",
@@ -38,41 +38,57 @@
       ]
     },
     "pytest": {
-      "command": "MPLCONFIGDIR=.mplconfig .venv/bin/pytest -q",
-      "utc_timestamp": "2026-09-16T21:03:41.316180+00:00",
+      "command": "MPLCONFIGDIR=.mplconfig .venv/bin/python -m pytest --cov=market_risk --cov-report=term-missing",
+      "utc_timestamp": "2026-09-17T01:01:16.597716+00:00",
       "exit_status": 0,
-      "git_commit": "213dada89d0df3d6e071b5ad1000027ed2aff506",
-      "workspace_tree_hash": "217c1f3a67b0cd6589b62aa7c51e4b0dbf0bc2a7f584499388e5abd6e47e2fd1",
-      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
+      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
+      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
-        "22 tests passed",
+        "28 tests passed",
+        "67% aggregate coverage",
         "2 non-failing seaborn PendingDeprecationWarning warnings"
       ]
     },
     "ruff": {
-      "command": ".venv/bin/ruff check src tests",
-      "utc_timestamp": "2026-09-16T21:03:41.515382+00:00",
+      "command": ".venv/bin/python -m ruff check .",
+      "utc_timestamp": "2026-09-17T01:01:16.849910+00:00",
       "exit_status": 0,
-      "git_commit": "213dada89d0df3d6e071b5ad1000027ed2aff506",
-      "workspace_tree_hash": "217c1f3a67b0cd6589b62aa7c51e4b0dbf0bc2a7f584499388e5abd6e47e2fd1",
-      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
+      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
+      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
         "All checks passed"
       ]
     },
     "clean_wheel_cli": {
-      "command": "uv pip install --python .venv/bin/python --reinstall --no-deps . && .venv/bin/python -m market_risk.cli --help",
-      "utc_timestamp": "2026-09-16T21:03:41.695099+00:00",
+      "command": "uv pip install --python .venv/bin/python --reinstall --no-deps . && .venv/bin/python -m market_risk --help",
+      "utc_timestamp": "2026-09-17T01:01:17.091292+00:00",
       "exit_status": 0,
-      "git_commit": "213dada89d0df3d6e071b5ad1000027ed2aff506",
-      "workspace_tree_hash": "217c1f3a67b0cd6589b62aa7c51e4b0dbf0bc2a7f584499388e5abd6e47e2fd1",
-      "configuration_hash": "900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09",
+      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
+      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
+      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
-        "wheel installed",
+        "wheel installed: multi-asset-market-risk-engine 1.0.0",
         "CLI help exited 0"
+      ]
+    },
+    "browser_ux": {
+      "command": "Playwright Chromium smoke: desktop 1440x1000 and mobile 430x932",
+      "utc_timestamp": "2026-09-17T01:01:17.328686+00:00",
+      "exit_status": 0,
+      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
+      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
+      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
+      "verified_output_paths": [
+        "docs/assets/risk-ledger-dashboard.png",
+        "7 tabs rendered and 7 Plotly charts loaded",
+        "0 overlap candidates across default/configured desktop/mobile views",
+        "0 console warnings, console errors, or page errors"
       ]
     }
   }

@@ -6,15 +6,15 @@
 |---|---|
 | Valuation date | 2024-12-31 |
 | Base currency | USD |
-| Model version | 0.1.0 |
+| Model version | 1.0.0 |
 | Data source / snapshot | Deterministic artificial latent-factor generator / `synthetic_demo_seed42_n520_end2024-12-31` |
 | Data retrieval or creation time | 2026-09-16T19:52:08.009712+00:00 |
 | Lookback | 250 valid portfolio intervals |
 | Confidence levels | 95.0%, 97.5%, 99.0% |
 | Monte Carlo paths / seed | 50,000 / 42 |
-| Configuration hash | `900987d7ab6c35daf81b40ec113925065d7122fc01a3bdb249e09deff743ed09` |
+| Configuration hash | `14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458` |
 | Runtime | python 3.14.2, numpy 2.5.3, pandas 2.3.3, scipy 1.18.1, matplotlib 3.11.2 |
-| Generated UTC | 2026-09-16T21:03:07.459503+00:00 |
+| Generated UTC | 2026-09-17T01:00:02.451343+00:00 |
 
 ## Executive Summary
 
