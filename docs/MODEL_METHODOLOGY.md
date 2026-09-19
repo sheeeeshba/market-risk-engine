@@ -10,19 +10,19 @@ No external blueprint existed at project start, so the attached master specifica
 
 ## Data and Common Calendar
 
-Raw timestamps are normalized, duplicate dates retain the last retrieved observation, and ETF/FX levels define the candidate calendar. ETF/FX gaps are never filled. DGS5/DGS10 may be carried forward for at most three business days, with fill flags and ages. Remaining incomplete dates are dropped, then returns and yield changes are calculated between consecutive surviving dates. Multi-civil-day intervals are flagged.
+Raw timestamps are normalized, duplicate dates retain the last retrieved observation, and market-price/FX levels define the candidate calendar. Price and FX gaps are never filled. DGS2/DGS5/DGS10/DGS30 may be carried forward for at most three business days, with fill flags and ages. Remaining incomplete dates are dropped, then returns and yield changes are calculated between consecutive surviving dates. Multi-civil-day intervals are flagged.
 
 The bundled snapshot is artificial. Optional live mode explicitly requests Yahoo `Adj Close` with `auto_adjust=False`; FRED yields arrive as percentages and are divided by 100 before differencing.
 
 ## Portfolio Accounting and Timing
 
-Funded assets plus cash start at USD 10 million. The FX overlay has zero funded value and is excluded from the NAV identity. For every date: start with prior-close holdings, apply shocks, update ETF and bond values, settle FX P&L into cash, reconcile pre-trade NAV, rebalance after the first valid close of each month, and store holdings for the next interval.
+Funded assets plus cash start at USD 10 million. The catalog and user allocation are resolved before calculation: non-cash funded weights cannot exceed 100%, residual cash is `1 - Σweights`, and at least one risk-bearing funded instrument is required. The FX overlay has zero funded value and is excluded from the NAV identity. For every date: start with prior-close holdings, apply shocks, update stock/ETF and bond values, settle FX P&L into cash, reconcile pre-trade NAV, rebalance after the first valid close of each month, and store holdings for the next interval.
 
-Rebalancing sets funded positions to recurring target weights against cash and resets FX notional to 7.5% of NAV. There are no external flows, so pre-rebalance `NAV_t = NAV_t-1 + P&L_t`.
+Rebalancing sets funded positions to their selected target weights and resets each FX notional to its selected fraction of NAV. There are no external flows, so pre-rebalance `NAV_t = NAV_t-1 + P&L_t`.
 
 ## P&L Models
 
-ETF P&L is signed market value times adjusted simple return. Bond percentage price change is:
+Stock and ETF P&L is signed market value times adjusted simple return. Bond percentage price change is:
 
 `-Modified Duration × ΔYield + 0.5 × Convexity × ΔYield²`.
 
@@ -36,7 +36,7 @@ Historical Simulation fully revalues current holdings under the latest 250 joint
 
 Parametric risk uses zero mean, linear factor exposure `x`, and sample covariance `Σ`. P&L volatility is `sqrt(x'Σx)`, VaR is `zα σ`, and Normal ES is `σ φ(zα)/(1-α)`.
 
-Monte Carlo draws zero-mean multivariate Normal factor shocks with deterministic seeds, then fully revalues ETFs, duration-convexity bonds, and FX. Covariance is symmetrized; only tiny negative numerical eigenvalues may be clipped, with diagnostics recorded. Material non-positive-semidefinite failures stop the run.
+Monte Carlo draws zero-mean multivariate Normal factor shocks with deterministic seeds, then fully revalues stocks/ETFs, duration-convexity bonds, and FX. Covariance is symmetrized; only tiny negative numerical eigenvalues may be clipped, with diagnostics recorded. Material non-positive-semidefinite failures stop the run.
 
 ## Contributions
 
@@ -61,5 +61,6 @@ Six versioned hypothetical scenarios fully revalue positions and preserve gains 
 
 ## Change Log
 
+- 1.1.0: approved 26-instrument catalog, four allocation presets, automatic residual cash, linked custom-portfolio recalculation, 25-factor data, and asset-class stress defaults.
 - 1.0.0: typed platform/application boundary, interactive Risk Ledger review workspace, configurable presentation controls, evidence bundle downloads, and expanded UI validation.
 - 0.1.0: canonical Core accounting, three VaR/ES models, rolling backtests, contributions, stress engine, automated report, tests, and synthetic offline snapshot.

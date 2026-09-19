@@ -1,4 +1,4 @@
 scenario_id,scenario_name,scenario_type,horizon,scenario_pnl,scenario_loss,loss_pct_nav,principal_loss_driver,reconciliation_difference
-gfc_lehman_synthetic,GFC / Lehman Window (Artificial Fixture),historical_replay_fixture,2008-09-15_to_2008-10-10_multi_day,-1023284.1127872204,1023284.1127872204,0.11223461416669378,SPY,0.0
-covid_2020_synthetic,COVID-19 Window (Artificial Fixture),historical_replay_fixture,2020-02-19_to_2020-03-23_multi_day,-1103337.6252489546,1103337.6252489546,0.1210149469907407,SPY,0.0
-inflation_rates_2022_synthetic,Inflation and Rates Window (Artificial Fixture),historical_replay_fixture,2022-01-03_to_2022-10-12_multi_day,-1596235.2280965033,1596235.2280965033,0.17507634752260456,SPY,0.0
+gfc_lehman_synthetic,GFC / Lehman Window (Artificial Fixture),historical_replay_fixture,2008-09-15_to_2008-10-10_multi_day,-1505735.335783619,1505735.335783619,0.16611875136093662,SPY,0.0
+covid_2020_synthetic,COVID-19 Window (Artificial Fixture),historical_replay_fixture,2020-02-19_to_2020-03-23_multi_day,-1602034.0633776444,1602034.0633776444,0.17674281257900007,SPY,0.0
+inflation_rates_2022_synthetic,Inflation and Rates Window (Artificial Fixture),historical_replay_fixture,2022-01-03_to_2022-10-12_multi_day,-1573911.4119494848,1573911.4119494848,0.17364020906749156,SPY,0.0

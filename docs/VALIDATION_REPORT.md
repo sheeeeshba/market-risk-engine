@@ -9,15 +9,15 @@ Validation covers the artificial offline snapshot and the Core calculation inter
 - End-to-end snapshot command completed with exit status 0.
 - Full pytest suite completed successfully; see `outputs/verification_manifest.json` for the current recorded gate after the final test run.
 - The integration test created eight figures and a report from a small portfolio flow.
-- The production snapshot run created the required report, 11 CSV tables, and eight PNG figures.
-- Twenty-eight automated tests pass, including the typed platform layer and Streamlit interaction suite.
-- Desktop and 430-pixel mobile browser checks found no text/chart-label overlaps, console errors, or page errors after the responsive layout fixes.
+- The production snapshot run created the required report, 16 CSV tables, and eight PNG figures.
+- Thirty-four automated tests pass with 77% aggregate package coverage, including allocation, linked recalculation, typed platform, and Streamlit interaction suites.
+- Desktop and 430-pixel mobile browser checks changed presets, applied a custom portfolio, and found no text/chart-label overlaps, console errors, or page errors.
 
 ## Covered Controls
 
 - Deterministic synthetic generation and no missing factor values.
-- ETF/FX no-fill rule, limited and flagged rate fill, multi-civil-day interval flag.
-- Funded weights and NAV identity, overlay exclusion, monthly post-close rebalance.
+- Market-price/FX no-fill rule, limited and flagged rate fill, multi-civil-day interval flag.
+- Catalog uniqueness, add/remove/reweight allocation, automatic residual cash, NAV identity, overlay exclusion, and monthly post-close rebalance.
 - Long equity, long bond, convexity, and long-EUR sign checks.
 - Exact tied-boundary Historical ES weights and effective tail mass.
 - Confidence monotonicity, zero covariance, Normal closed-form check, Monte Carlo seed reproducibility.
@@ -25,13 +25,13 @@ Validation covers the artificial offline snapshot and the Core calculation inter
 - Six scenario reconciliation and distributional-stress semantics.
 - Kupiec and Christoffersen zero/all/missing-transition handling and intentional date-alignment failure.
 - End-to-end artifact existence and report metadata propagation.
-- Dashboard tab availability, configurable view controls, download surfaces, and live-mode credential gating.
+- Eight dashboard tabs, preset selection, custom Apply workflow, configurable view controls, committed/custom downloads, and live-mode credential gating.
 
 ## Observed Warnings
 
 - The bundled rolling 99% backtest has fewer than five expected exceptions and unstable transition cell counts.
 - Seaborn emits a pending-deprecation warning for internal heat-map missing-value coloring; outputs are unaffected.
-- Python 3.14 editable `.pth` activation was unreliable in the build sandbox; normal wheel installation is the supported clean-install path.
+- Normal wheel installation of version 1.1.0 and the CLI import seam were verified.
 
 ## Blocked Validation
 

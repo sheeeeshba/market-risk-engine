@@ -1,7 +1,7 @@
 scenario_id,scenario_name,scenario_type,horizon,scenario_pnl,scenario_loss,loss_pct_nav,principal_loss_driver,reconciliation_difference
-global_equity_selloff,Global Equity Selloff,hypothetical,instantaneous_multi_factor,-732964.2306266106,732964.2306266106,0.08039209892382156,SPY,0.0
-parallel_rates_up_100bp,Parallel Rates +100 bps,hypothetical,instantaneous,-161202.15532667818,161202.15532667818,0.017680780420453256,US10Y,0.0
-parallel_rates_up_200bp,Parallel Rates +200 bps,hypothetical,instantaneous,-310082.8063612197,310082.8063612197,0.03401012846459952,US10Y,0.0
-foreign_currencies_down_10pct,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,-67632.21587485468,67632.21587485468,0.0074179551495990505,EURUSD_OVERLAY,0.0
-stocks_and_bonds_fall,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,-1043993.438775253,1043993.438775253,0.11450602948808307,SPY,0.0
-flight_to_quality,Flight to Quality,hypothetical,instantaneous_multi_factor,-580448.2859959952,580448.2859959952,0.06366402899096475,SPY,0.0
+global_equity_selloff,Global Equity Selloff,hypothetical,instantaneous_multi_factor,-898185.7134212661,898185.7134212661,0.09909144433149857,SPY,0.0
+parallel_rates_up_100bp,Parallel Rates +100 bps,hypothetical,instantaneous,-116957.01104748157,116957.01104748157,0.012903165766514834,US10Y,0.0
+parallel_rates_up_200bp,Parallel Rates +200 bps,hypothetical,instantaneous,-220286.1986672345,220286.1986672345,0.024302855485292867,US10Y,0.0
+foreign_currencies_down_10pct,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,-46220.28719703288,46220.28719703288,0.0050992071543032175,EURUSD_OVERLAY,0.0
+stocks_and_bonds_fall,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,-1254378.1555357645,1254378.1555357645,0.1383880207763023,SPY,0.0
+flight_to_quality,Flight to Quality,hypothetical,instantaneous_multi_factor,-739978.5086610328,739978.5086610328,0.08163739202462575,SPY,0.0

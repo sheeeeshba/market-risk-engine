@@ -43,7 +43,7 @@ Historical ES uses exactly {{ historical_tail_mass }} effective observations at 
 
 {{ convergence_table }}
 
-The maximum absolute 50,000-versus-100,000-path difference across three seeds is {{ max_var_convergence_difference }} for 99% VaR and {{ max_es_convergence_difference }} for ES. The approximate 2% VaR convergence target is evaluated per seed in the table.
+The maximum absolute {{ convergence_low_paths }}-versus-{{ convergence_high_paths }}-path difference across three seeds is {{ max_var_convergence_difference }} for 99% VaR and {{ max_es_convergence_difference }} for ES. The approximate 2% VaR convergence target is evaluated per seed in the table.
 
 ![Loss distribution]({{ figure_loss_distribution }})
 

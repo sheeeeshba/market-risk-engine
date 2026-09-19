@@ -20,7 +20,7 @@ python -m pytest --cov=market_risk --cov-report=term-missing
 python -m streamlit run streamlit_app.py
 ```
 
-Confirm that Demo opens without credentials, all seven tabs render, charts respond to the view controls, downloads contain no secrets, and the synthetic classification remains visible.
+Confirm that Demo opens without credentials, all eight tabs render, portfolio add/remove/reweight actions recalculate linked results, charts respond to the view controls, downloads contain no secrets, and the synthetic classification remains visible.
 
 ## Streamlit Community Cloud
 

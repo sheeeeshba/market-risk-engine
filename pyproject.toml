@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "multi-asset-market-risk-engine"
-version = "1.0.0"
+version = "1.1.0"
 description = "Educational multi-asset market risk engine for reproducible VaR, ES, backtesting, and stress testing."
 readme = "README.md"
 requires-python = ">=3.10"

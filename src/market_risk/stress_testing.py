@@ -38,21 +38,44 @@ def run_deterministic_stresses(
     if not isinstance(scenarios, Mapping) or not scenarios:
         raise ValueError("Stress configuration must contain scenarios.")
     factors = list(dict.fromkeys(snapshot.loc[snapshot["instrument_type"] != "cash", "factor"]))
+    factor_asset_classes = (
+        snapshot.loc[snapshot["instrument_type"] != "cash", ["factor", "asset_class"]]
+        .drop_duplicates("factor")
+        .set_index("factor")["asset_class"]
+        .to_dict()
+    )
     summary_rows: list[dict[str, Any]] = []
     detail_rows: list[dict[str, Any]] = []
     warnings: list[str] = []
 
     for scenario_id, scenario in scenarios.items():
         configured_shocks = scenario.get("shocks", {})
+        asset_class_shocks = scenario.get("asset_class_shocks", {})
+        if not isinstance(configured_shocks, Mapping) or not isinstance(
+            asset_class_shocks, Mapping
+        ):
+            raise ValueError(f"Scenario {scenario_id} shocks must be mappings.")
         unused = sorted(set(configured_shocks) - set(factors))
         if unused:
             warnings.append(f"{scenario_id}: unused scenario factors {unused}")
-        shock_row = {factor: float(configured_shocks.get(factor, 0.0)) for factor in factors}
+        shock_row = {
+            factor: float(
+                configured_shocks.get(
+                    factor,
+                    asset_class_shocks.get(factor_asset_classes[factor], 0.0),
+                )
+            )
+            for factor in factors
+        }
         shocks = pd.DataFrame([shock_row], index=[scenario_id])
         position_pnl = revalue_factor_shocks(snapshot, shocks).iloc[0]
         portfolio_pnl = float(position_pnl.sum())
         position_losses = -position_pnl
-        principal_driver = str(position_losses.idxmax())
+        principal_driver = (
+            str(position_losses.idxmax())
+            if not np.isclose(float(position_losses.abs().max()), 0.0)
+            else "No affected position"
+        )
 
         for position_id, position in snapshot.iterrows():
             shock = float(shock_row.get(position["factor"], 0.0))
@@ -71,6 +94,7 @@ def run_deterministic_stresses(
                     "scenario_type": scenario.get("type", "unknown"),
                     "horizon": scenario.get("horizon", "unspecified"),
                     "factor": position["factor"],
+                    "asset_class": position["asset_class"],
                     "factor_shock": shock,
                     "position_pnl": pnl,
                     "position_loss": -pnl,
@@ -155,4 +179,3 @@ def volatility_correlation_stress(
         "stressed_covariance_repair": stressed_repair,
         "stressed_covariance": stressed_covariance,
     }
-

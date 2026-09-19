@@ -1,66 +1,99 @@
-version: 1
+version: 2
+methodology: Asset-class defaults cover every approved instrument; factor overrides capture tenor-specific rates and FX.
 scenarios:
   global_equity_selloff:
     name: Global Equity Selloff
     type: hypothetical
     horizon: instantaneous_multi_factor
-    rationale: Severe global risk-off move with a Treasury and gold flight to quality.
+    rationale: Severe global risk-off move with credit spread widening and a Treasury and gold flight to quality.
     source: Internal educational scenario
+    asset_class_shocks:
+      US Equity: -0.20
+      International Equity: -0.22
+      Emerging Markets Equity: -0.25
+      Real Estate: -0.22
+      Investment Grade Credit: -0.08
+      High Yield Credit: -0.15
+      Inflation-Linked Bonds: -0.03
+      Precious Metals: 0.05
+      Commodities: -0.10
     shocks:
-      SPY_RETURN: -0.20
-      QQQ_RETURN: -0.25
-      EFA_RETURN: -0.22
-      GLD_RETURN: 0.05
-      DGS5_CHANGE: -0.005
-      DGS10_CHANGE: -0.005
+      DGS2_CHANGE: -0.0040
+      DGS5_CHANGE: -0.0050
+      DGS10_CHANGE: -0.0050
+      DGS30_CHANGE: -0.0040
       EURUSD_RETURN: -0.05
   parallel_rates_up_100bp:
     name: Parallel Rates +100 bps
     type: hypothetical
     horizon: instantaneous
-    rationale: Moderate parallel Treasury repricing.
+    rationale: Moderate parallel Treasury repricing across the curve.
     source: Internal educational scenario
-    shocks: {DGS5_CHANGE: 0.01, DGS10_CHANGE: 0.01}
+    shocks:
+      DGS2_CHANGE: 0.01
+      DGS5_CHANGE: 0.01
+      DGS10_CHANGE: 0.01
+      DGS30_CHANGE: 0.01
   parallel_rates_up_200bp:
     name: Parallel Rates +200 bps
     type: hypothetical
     horizon: instantaneous
-    rationale: Severe parallel Treasury repricing.
+    rationale: Severe parallel Treasury repricing across the curve.
     source: Internal educational scenario
-    shocks: {DGS5_CHANGE: 0.02, DGS10_CHANGE: 0.02}
+    shocks:
+      DGS2_CHANGE: 0.02
+      DGS5_CHANGE: 0.02
+      DGS10_CHANGE: 0.02
+      DGS30_CHANGE: 0.02
   foreign_currencies_down_10pct:
     name: Foreign Currencies Depreciate 10% versus USD
     type: hypothetical
     horizon: instantaneous
-    rationale: Broad USD appreciation applied only to direct currency positions in Core.
+    rationale: Broad USD appreciation applied to the direct EUR/USD overlay.
     source: Internal educational scenario
-    shocks: {EURUSD_RETURN: -0.10}
+    shocks:
+      EURUSD_RETURN: -0.10
   stocks_and_bonds_fall:
     name: Stocks and Bonds Fall Together
     type: hypothetical
     horizon: instantaneous_multi_factor
-    rationale: Inflationary selloff with failed stock-bond diversification.
+    rationale: Inflationary selloff with failed stock-bond diversification, weaker metals, and higher yields.
     source: Internal educational scenario
+    asset_class_shocks:
+      US Equity: -0.20
+      International Equity: -0.20
+      Emerging Markets Equity: -0.23
+      Real Estate: -0.25
+      Investment Grade Credit: -0.10
+      High Yield Credit: -0.14
+      Inflation-Linked Bonds: -0.08
+      Precious Metals: -0.07
+      Commodities: -0.12
     shocks:
-      SPY_RETURN: -0.20
-      QQQ_RETURN: -0.20
-      EFA_RETURN: -0.20
-      GLD_RETURN: -0.07
+      DGS2_CHANGE: 0.015
       DGS5_CHANGE: 0.015
       DGS10_CHANGE: 0.015
+      DGS30_CHANGE: 0.015
       EURUSD_RETURN: -0.05
   flight_to_quality:
     name: Flight to Quality
     type: hypothetical
     horizon: instantaneous_multi_factor
-    rationale: Equity selloff with falling Treasury yields and stronger gold.
+    rationale: Equity and credit selloff with falling Treasury yields and stronger precious metals.
     source: Internal educational scenario
+    asset_class_shocks:
+      US Equity: -0.20
+      International Equity: -0.22
+      Emerging Markets Equity: -0.25
+      Real Estate: -0.18
+      Investment Grade Credit: -0.04
+      High Yield Credit: -0.12
+      Inflation-Linked Bonds: 0.02
+      Precious Metals: 0.08
+      Commodities: -0.08
     shocks:
-      SPY_RETURN: -0.20
-      QQQ_RETURN: -0.20
-      EFA_RETURN: -0.20
-      GLD_RETURN: 0.08
-      DGS5_CHANGE: -0.01
-      DGS10_CHANGE: -0.01
+      DGS2_CHANGE: -0.008
+      DGS5_CHANGE: -0.010
+      DGS10_CHANGE: -0.010
+      DGS30_CHANGE: -0.009
       EURUSD_RETURN: -0.07
-

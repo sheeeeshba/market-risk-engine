@@ -8,4 +8,4 @@ from .platform import MarketRiskPlatform
 
 __all__ = ["MarketRiskAnalysis", "MarketRiskPlatform", "RiskHeadline"]
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"

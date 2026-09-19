@@ -60,7 +60,11 @@ class MarketRiskAnalysis:
     headline: RiskHeadline
     tables: dict[str, pd.DataFrame]
     figures: dict[str, Path]
-    artifacts: ArtifactPaths
+    artifacts: ArtifactPaths | None
+    generated_report_text: str | None = None
+    generated_summary_text: str | None = None
+    generated_manifest: dict | None = None
+    portfolio_definition: dict | None = None
 
     def table(self, name: str) -> pd.DataFrame:
         """Return a defensive copy of one named evidence table."""
@@ -73,30 +77,68 @@ class MarketRiskAnalysis:
 
     @property
     def report_text(self) -> str:
+        if self.generated_report_text is not None:
+            return self.generated_report_text
+        if self.artifacts is None:
+            raise ValueError("This analysis has no generated report.")
         return self.artifacts.report.read_text(encoding="utf-8")
 
     @property
     def summary_text(self) -> str:
+        if self.generated_summary_text is not None:
+            return self.generated_summary_text
+        if self.artifacts is None:
+            raise ValueError("This analysis has no generated summary.")
         return self.artifacts.summary.read_text(encoding="utf-8")
 
     @property
     def verification_manifest(self) -> dict:
+        if self.generated_manifest is not None:
+            return dict(self.generated_manifest)
+        if self.artifacts is None:
+            raise ValueError("This analysis has no verification manifest.")
         return json.loads(self.artifacts.manifest.read_text(encoding="utf-8"))
+
+    @property
+    def report_filename(self) -> str:
+        return self.artifacts.report.name if self.artifacts else "custom_market_risk_report.md"
+
+    @property
+    def summary_filename(self) -> str:
+        return self.artifacts.summary.name if self.artifacts else "custom_risk_summary.md"
+
+    @property
+    def is_custom(self) -> bool:
+        return self.artifacts is None
 
     def bundle_bytes(self) -> bytes:
         """Build an in-memory reviewer bundle without including secrets or caches."""
 
         buffer = BytesIO()
-        paths = [
-            self.artifacts.report,
-            self.artifacts.summary,
-            self.artifacts.manifest,
-            *sorted(self.artifacts.tables_directory.glob("*.csv")),
-            *sorted(self.artifacts.tables_directory.glob("*.json")),
-            *sorted(self.artifacts.figures_directory.glob("*.png")),
-        ]
         with ZipFile(buffer, "w", compression=ZIP_DEFLATED) as archive:
-            for path in paths:
-                if path.is_file():
-                    archive.write(path, arcname=str(path.relative_to(self.root)))
+            if self.artifacts is not None:
+                paths = [
+                    self.artifacts.report,
+                    self.artifacts.summary,
+                    self.artifacts.manifest,
+                    *sorted(self.artifacts.tables_directory.glob("*.csv")),
+                    *sorted(self.artifacts.tables_directory.glob("*.json")),
+                    *sorted(self.artifacts.figures_directory.glob("*.png")),
+                ]
+                for path in paths:
+                    if path.is_file():
+                        archive.write(path, arcname=str(path.relative_to(self.root)))
+            else:
+                archive.writestr("reports/custom_market_risk_report.md", self.report_text)
+                archive.writestr("reports/custom_risk_summary.md", self.summary_text)
+                archive.writestr(
+                    "outputs/verification_manifest.json",
+                    json.dumps(self.verification_manifest, indent=2, default=str),
+                )
+                archive.writestr(
+                    "config/portfolio_definition.json",
+                    json.dumps(self.portfolio_definition or {}, indent=2, default=str),
+                )
+                for name, frame in sorted(self.tables.items()):
+                    archive.writestr(f"outputs/tables/{name}.csv", frame.to_csv(index=False))
         return buffer.getvalue()

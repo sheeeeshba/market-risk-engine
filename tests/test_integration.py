@@ -9,6 +9,7 @@ from market_risk.config import load_yaml
 from market_risk.contributions import parametric_contributions
 from market_risk.data_pipeline import generate_synthetic_demo
 from market_risk.portfolio import run_portfolio_history
+from market_risk.portfolio_builder import load_default_portfolio
 from market_risk.reporting import create_core_figures, render_market_risk_report
 from market_risk.stress_testing import run_deterministic_stresses
 from market_risk.var_models import (
@@ -24,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def test_small_portfolio_flows_through_report_and_eight_figures(tmp_path: Path) -> None:
     factors, metadata = generate_synthetic_demo(periods=270, seed=7)
-    portfolio_config = load_yaml(ROOT / "config/core_portfolio.yaml")
+    _, _, _, portfolio_config = load_default_portfolio(ROOT)
     stress_config = load_yaml(ROOT / "config/stress_scenarios.yaml")
     history = run_portfolio_history(factors, portfolio_config)
     snapshot = history.ending_snapshot
@@ -81,4 +82,3 @@ def test_small_portfolio_flows_through_report_and_eight_figures(tmp_path: Path) 
     text = report.read_text(encoding="utf-8")
     assert metadata["snapshot_id"] in text
     assert f"{historical.var:.6f}" in text
-

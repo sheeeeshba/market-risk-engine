@@ -3,13 +3,23 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pandas as pd
 
-from .config import load_yaml, project_root
+from .analysis import CalculationProfile, calculate_portfolio_risk
+from .config import configuration_hash, load_yaml, project_root
 from .data_pipeline import SYNTHETIC_WATERMARK
 from .models import ArtifactPaths, MarketRiskAnalysis, RiskHeadline
+from .portfolio_builder import (
+    InstrumentCatalog,
+    PortfolioAllocation,
+    PortfolioLibrary,
+    load_instrument_catalog,
+    load_portfolio_library,
+    resolve_portfolio,
+)
 
 TABLE_FILES = {
     "asset_class_contributions": "asset_class_contributions.csv",
@@ -22,6 +32,7 @@ TABLE_FILES = {
     "monte_carlo_convergence_summary": "monte_carlo_convergence_summary.csv",
     "negative_hedging_contributions": "negative_hedging_contributions.csv",
     "position_history": "position_history.csv",
+    "portfolio_allocation": "portfolio_allocation.csv",
     "risk_contributions": "risk_contributions.csv",
     "rolling_forecasts": "rolling_forecasts.csv",
     "stress_detail": "stress_detail.csv",
@@ -92,9 +103,10 @@ class MarketRiskPlatform:
             )
 
         data_classification = str(metadata.get("data_classification", "LIVE OR EXTERNAL DATA"))
+        default_allocation = self.portfolio_library().allocation()
         return MarketRiskAnalysis(
             root=self.root,
-            portfolio_name=str(config["portfolio_name"]),
+            portfolio_name=default_allocation.portfolio_name,
             model_version=str(config["model_version"]),
             base_currency=str(config["base_currency"]),
             data_mode=data_mode,
@@ -105,6 +117,97 @@ class MarketRiskPlatform:
             tables=tables,
             figures=figures,
             artifacts=artifacts,
+        )
+
+    def portfolio_catalog(self) -> InstrumentCatalog:
+        """Return the approved universe displayed by the portfolio builder."""
+
+        return load_instrument_catalog(self.root / "config/instrument_catalog.yaml")
+
+    def portfolio_library(self) -> PortfolioLibrary:
+        """Return named starting allocations and portfolio-level controls."""
+
+        return load_portfolio_library(self.root / "config/core_portfolio.yaml")
+
+    def analyze_portfolio(
+        self,
+        allocation: PortfolioAllocation,
+        *,
+        data_mode: str = "snapshot",
+        fred_api_key: str | None = None,
+    ) -> MarketRiskAnalysis:
+        """Recalculate all risk outputs for one user-edited portfolio."""
+
+        if data_mode not in {"snapshot", "synthetic_demo", "live"}:
+            raise ValueError(f"Unsupported data mode: {data_mode!r}")
+        catalog = self.portfolio_catalog()
+        portfolio_config = resolve_portfolio(catalog, allocation)
+        model_config = load_yaml(self.model_config_path)
+        stress_config = load_yaml(self.root / "config/stress_scenarios.yaml")
+        crisis_config = load_yaml(self.root / "config/historical_crises.yaml")
+        from .engine import load_factor_data
+
+        factors, metadata = load_factor_data(
+            self.root,
+            data_mode,
+            model_config,
+            fred_api_key=fred_api_key,
+        )
+        profile = CalculationProfile.interactive(model_config)
+        calculation = calculate_portfolio_risk(
+            factors,
+            portfolio_config,
+            model_config,
+            stress_config,
+            crisis_config,
+            profile=profile,
+        )
+        tables = calculation.public_tables()
+        headline = _build_headline(tables, model_config)
+        data_classification = str(metadata.get("data_classification", "LIVE OR EXTERNAL DATA"))
+        allocation_hash = configuration_hash(allocation.as_dict())[:12]
+        report_text, summary_text = _custom_narrative(
+            allocation,
+            headline,
+            tables,
+            data_classification,
+            profile,
+        )
+        manifest = {
+            "analysis_type": "interactive_custom_portfolio",
+            "generated_utc": datetime.now(timezone.utc).isoformat(),
+            "allocation_hash": allocation_hash,
+            "snapshot_id": metadata.get("snapshot_id", "not-recorded"),
+            "calculation_profile": {
+                "current_monte_carlo_paths": profile.current_paths,
+                "rolling_monte_carlo_paths": profile.rolling_paths,
+                "convergence_paths": profile.convergence_paths,
+            },
+            "gates": {
+                "portfolio_validation": {
+                    "exit_status": 0,
+                    "utc_timestamp": datetime.now(timezone.utc).isoformat(),
+                    "detail": "Funding identity, instrument mappings, and linked recalculation passed.",
+                }
+            },
+        }
+        return MarketRiskAnalysis(
+            root=self.root,
+            portfolio_name=allocation.portfolio_name,
+            model_version=str(model_config["model_version"]),
+            base_currency=allocation.base_currency,
+            data_mode=data_mode,
+            snapshot_id=f"{metadata.get('snapshot_id', 'not-recorded')} · {allocation_hash}",
+            data_classification=data_classification,
+            is_synthetic=data_classification == SYNTHETIC_WATERMARK,
+            headline=headline,
+            tables=tables,
+            figures={},
+            artifacts=None,
+            generated_report_text=report_text,
+            generated_summary_text=summary_text,
+            generated_manifest=manifest,
+            portfolio_definition=allocation.as_dict(),
         )
 
     def _artifacts_exist(self) -> bool:
@@ -205,3 +308,49 @@ def _build_headline(tables: dict[str, pd.DataFrame], config: dict) -> RiskHeadli
         forecast_count=int(forecasts["forecast_date"].nunique()),
         total_exceptions=int(forecasts["exception"].astype(bool).sum()),
     )
+
+
+def _custom_narrative(
+    allocation: PortfolioAllocation,
+    headline: RiskHeadline,
+    tables: dict[str, pd.DataFrame],
+    data_classification: str,
+    profile: CalculationProfile,
+) -> tuple[str, str]:
+    """Create portable Markdown evidence for an in-memory custom calculation."""
+
+    funded_count = sum(value > 0.0 for value in allocation.funded_weights.values())
+    overlay_count = sum(value != 0.0 for value in allocation.overlay_fractions.values())
+    summary_lines = [
+        f"# Custom Portfolio Risk Summary — {headline.as_of_date}",
+        "",
+        f"> **{data_classification}.** Educational analysis; not investment advice.",
+        "",
+        f"- Portfolio: **{allocation.portfolio_name}**",
+        f"- Active funded positions: **{funded_count}**; overlays: **{overlay_count}**; residual cash: **{allocation.residual_cash_weight:.1%}**",
+        f"- Closing NAV: **USD {headline.nav:,.0f}**",
+        f"- {headline.primary_var_confidence:.1%} VaR range: **USD {headline.var_low:,.0f}–USD {headline.var_high:,.0f}**",
+        f"- {headline.primary_es_confidence:.1%} ES range: **USD {headline.es_low:,.0f}–USD {headline.es_high:,.0f}**",
+        f"- Largest component-VaR driver: **{headline.top_risk_driver}** (USD {headline.top_component_var:,.0f})",
+        f"- Worst configured stress: **{headline.worst_stress}** (USD {headline.worst_stress_loss:,.0f}; {headline.worst_stress_pct_nav:.1%} of NAV)",
+        "",
+        f"Interactive profile: {profile.current_paths:,} current Monte Carlo paths and {profile.rolling_paths:,} paths per rolling forecast.",
+    ]
+    allocation_table = tables["portfolio_allocation"]
+    risk_table = tables["current_risk"]
+    report_lines = [
+        f"# Custom Market Risk Report — {headline.as_of_date}",
+        "",
+        *summary_lines[2:],
+        "",
+        "## Resolved allocation",
+        "",
+        allocation_table.to_markdown(index=False),
+        "",
+        "## Current VaR and Expected Shortfall",
+        "",
+        risk_table[["model", "confidence", "var", "es", "var_pct_nav", "es_pct_nav"]].to_markdown(index=False),
+        "",
+        "All portfolio history, backtesting, contributions, and stress tables are included in the downloadable ZIP bundle.",
+    ]
+    return "\n".join(report_lines) + "\n", "\n".join(summary_lines) + "\n"

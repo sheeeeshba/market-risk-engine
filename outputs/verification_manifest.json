@@ -3,11 +3,11 @@
   "gates": {
     "snapshot_pipeline": {
       "command": "python -m market_risk.cli run --config config/model_config.yaml --data-mode snapshot",
-      "utc_timestamp": "2026-09-17T01:00:02.473149+00:00",
+      "utc_timestamp": "2026-09-19T12:51:37.183507+00:00",
       "exit_status": 0,
-      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
-      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
-      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "git_commit": "c0ecadb6e032b749dc1dc9673e57bf77f6b6d5a0",
+      "workspace_tree_hash": "21a425d494ba2ef3313baa8c525c53a6cac95126a881093c4f3fc4afce21ecdd",
+      "configuration_hash": "fb9c2f366244ef728c5a85ec678d31c3820c30f0f5bc3f4f329490851215f543",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
         "reports/generated/2024-12-31_market_risk_report.md",
@@ -21,6 +21,7 @@
         "outputs/tables/monte_carlo_convergence.csv",
         "outputs/tables/monte_carlo_convergence_summary.csv",
         "outputs/tables/negative_hedging_contributions.csv",
+        "outputs/tables/portfolio_allocation.csv",
         "outputs/tables/position_history.csv",
         "outputs/tables/risk_contributions.csv",
         "outputs/tables/rolling_forecasts.csv",
@@ -38,26 +39,26 @@
       ]
     },
     "pytest": {
-      "command": "MPLCONFIGDIR=.mplconfig .venv/bin/python -m pytest --cov=market_risk --cov-report=term-missing",
-      "utc_timestamp": "2026-09-17T01:01:16.597716+00:00",
+      "command": "MPLCONFIGDIR=.mplconfig .venv/bin/pytest --cov=market_risk --cov-report=term-missing -q",
+      "utc_timestamp": "2026-09-19T12:52:06.719310+00:00",
       "exit_status": 0,
-      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
-      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
-      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "git_commit": "c0ecadb6e032b749dc1dc9673e57bf77f6b6d5a0",
+      "workspace_tree_hash": "2510fe32825f65f4b6b24bde2d0019c1b184ba55e3a8e84160f12eee8132e3c7",
+      "configuration_hash": "fb9c2f366244ef728c5a85ec678d31c3820c30f0f5bc3f4f329490851215f543",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
-        "28 tests passed",
-        "67% aggregate coverage",
+        "34 tests passed",
+        "77% aggregate coverage",
         "2 non-failing seaborn PendingDeprecationWarning warnings"
       ]
     },
     "ruff": {
-      "command": ".venv/bin/python -m ruff check .",
-      "utc_timestamp": "2026-09-17T01:01:16.849910+00:00",
+      "command": ".venv/bin/ruff check .",
+      "utc_timestamp": "2026-09-19T12:52:06.995719+00:00",
       "exit_status": 0,
-      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
-      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
-      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "git_commit": "c0ecadb6e032b749dc1dc9673e57bf77f6b6d5a0",
+      "workspace_tree_hash": "2510fe32825f65f4b6b24bde2d0019c1b184ba55e3a8e84160f12eee8132e3c7",
+      "configuration_hash": "fb9c2f366244ef728c5a85ec678d31c3820c30f0f5bc3f4f329490851215f543",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
         "All checks passed"
@@ -65,30 +66,33 @@
     },
     "clean_wheel_cli": {
       "command": "uv pip install --python .venv/bin/python --reinstall --no-deps . && .venv/bin/python -m market_risk --help",
-      "utc_timestamp": "2026-09-17T01:01:17.091292+00:00",
+      "utc_timestamp": "2026-09-19T12:52:07.247190+00:00",
       "exit_status": 0,
-      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
-      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
-      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "git_commit": "c0ecadb6e032b749dc1dc9673e57bf77f6b6d5a0",
+      "workspace_tree_hash": "2510fe32825f65f4b6b24bde2d0019c1b184ba55e3a8e84160f12eee8132e3c7",
+      "configuration_hash": "fb9c2f366244ef728c5a85ec678d31c3820c30f0f5bc3f4f329490851215f543",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
-        "wheel installed: multi-asset-market-risk-engine 1.0.0",
-        "CLI help exited 0"
+        "wheel installed: multi-asset-market-risk-engine 1.1.0",
+        "CLI help exited 0",
+        "custom portfolio API import verified"
       ]
     },
     "browser_ux": {
-      "command": "Playwright Chromium smoke: desktop 1440x1000 and mobile 430x932",
-      "utc_timestamp": "2026-09-17T01:01:17.328686+00:00",
+      "command": "Playwright Chromium: preset change, linked apply, desktop 1440x1000, mobile 430x932",
+      "utc_timestamp": "2026-09-19T12:52:07.494476+00:00",
       "exit_status": 0,
-      "git_commit": "d37e96acd1e48664f79c176069e70c544242ab38",
-      "workspace_tree_hash": "c5f743852d336f1d502d2e325fe1d4e619e072a3b8c5691563cce3fb7889727e",
-      "configuration_hash": "14281652a88147a1070fb27fff0029fb2e6473c6e76759e52b326c28aab16458",
+      "git_commit": "c0ecadb6e032b749dc1dc9673e57bf77f6b6d5a0",
+      "workspace_tree_hash": "2510fe32825f65f4b6b24bde2d0019c1b184ba55e3a8e84160f12eee8132e3c7",
+      "configuration_hash": "fb9c2f366244ef728c5a85ec678d31c3820c30f0f5bc3f4f329490851215f543",
       "input_snapshot_id": "synthetic_demo_seed42_n520_end2024-12-31",
       "verified_output_paths": [
-        "docs/assets/risk-ledger-dashboard.png",
-        "7 tabs rendered and 7 Plotly charts loaded",
-        "0 overlap candidates across default/configured desktop/mobile views",
-        "0 console warnings, console errors, or page errors"
+        "8 tabs rendered",
+        "defensive preset changed 23 to 14 active instruments",
+        "custom result rendered after Apply",
+        "0 overlap candidates in desktop/mobile views",
+        "0 console errors or page errors",
+        "docs/assets/portfolio-builder.png"
       ]
     }
   }

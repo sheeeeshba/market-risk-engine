@@ -1,13 +1,13 @@
 # Project Status
 
-Last updated: 2026-09-17 (Europe/Prague)
+Last updated: 2026-09-19 (Europe/Prague)
 
 ## Current State
 
 - The project is version-controlled and published at `https://github.com/sheeeeshba/market-risk-engine`.
 - No `outputs/market_risk_engine_blueprint.md` existed; the attached master prompt is authoritative.
 - A complete Core engineering path now runs from the bundled deterministic factor snapshot through P&L, three VaR/ES models, rolling backtests, contributions, stresses, eight figures, a one-page summary, and a management report.
-- Version 1.0 adds the Risk Ledger application: a typed platform interface, responsive Streamlit workspace, seven review tabs, configurable charts, and complete evidence downloads.
+- Version 1.1 adds a 26-instrument catalog, four presets, a linked Portfolio Builder, 25-factor data, asset-class-aware stresses, in-memory custom evidence bundles, and eight review tabs.
 - The current snapshot is artificial and every generated presentation output is watermarked `SYNTHETIC DATA — NOT FOR RESUME RESULTS`.
 - Historical conclusions and case-study market metrics remain blocked until a permitted real-data snapshot is verified; an explicitly watermarked recruiter screenshot and engineering-only CV bullets are ready.
 - The normal wheel install and CLI were verified. A public Colab launch URL is available, while a hosted clean-Colab execution remains an explicit verification follow-up.
@@ -21,7 +21,7 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 - Positive P&L is profit; positive loss is `-P&L`; VaR and ES are loss magnitudes.
 - Treasury changes are absolute decimal-yield changes; 100 basis points is `0.01`.
 - EURUSD is USD per EUR, so a long-EUR overlay profits when EURUSD rises.
-- Funded assets and cash equal NAV; the zero-funded-value FX overlay is reported separately.
+- User-selected funded assets plus automatically calculated residual cash equal 100% of NAV; the zero-funded-value FX overlay is reported separately.
 - Forecasts use exactly 250 valid factor rows ending at `t`, end-of-`t` holdings, and P&L at `t_next`.
 - One day means one valid common portfolio valuation interval; no square-root-of-time scaling is used.
 - Core ETFs are synthetic adjusted-total-return holdings; bonds use constant duration/convexity; FX P&L settles into cash.
@@ -34,19 +34,19 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 |---|---|---|
 | 0 — Inspect, decide, scaffold | COMPLETE | Structure, configuration, conventions, and independent worked examples |
 | 1 — Reproducible data layer | COMPLETE FOR SYNTHETIC; LIVE UNVERIFIED | Fixed snapshot hash, calendar tests, live adapter with explicit fields and units |
-| 2 — Portfolio and P&L | COMPLETE | Position/P&L/NAV reconciliation and rebalance tests |
+| 2 — Portfolio and P&L | COMPLETE | Catalog/allocation validation, add/remove/reweight controls, position/P&L/NAV reconciliation, and rebalance tests |
 | 3 — Current risk models | COMPLETE | Historical, Parametric, Monte Carlo, tail-weight, seed, and convergence evidence |
 | 4 — First demonstration | PRESENTATION MECHANICS COMPLETE; REAL-DATA GATE BLOCKED | Basic stresses, artificial COVID fixture, figures, summary, README |
 | 5 — Rolling forecasts | COMPLETE FOR SYNTHETIC | 270 aligned forecasts/model, statistical edge fixtures, no-future-input validation |
 | 6 — Contributions and full stress | COMPLETE FOR SYNTHETIC | Position/asset-class/factor tables, six scenarios, distributional stress, three artificial replays |
 | 7 — Automated reporting | COMPLETE FOR SYNTHETIC | Strict template, 8 PNGs, 15+ evidence files, warnings and watermarks |
-| 8 — Refactor and reproduce | COMPLETE LOCALLY; HOSTED COLAB FOLLOW-UP | 28 tests, lint, clean install/CLI, platform/UI tests, desktop/mobile browser checks; hosted Colab execution not yet verified |
+| 8 — Refactor and reproduce | COMPLETE LOCALLY; HOSTED COLAB FOLLOW-UP | 34 tests, lint, clean install/CLI, platform/UI tests; hosted Colab execution not yet verified |
 | 9 — Recruiter package | ENGINEERING VERSION COMPLETE | Public GitHub repository, dashboard screenshot, and evidence-limited CV/LinkedIn copy ready; market-result claims remain blocked on real data |
 
 ## Latest Executed Results
 
 - Snapshot pipeline command: exit status 0.
-- Pytest: 28 passed; two non-failing Seaborn pending-deprecation warnings.
+- Pytest: 34 passed; non-failing Seaborn pending-deprecation warnings may appear during figure tests.
 - Ruff: all checks passed.
 - Browser UX check: desktop and 430-pixel mobile views rendered with no detected text/chart-label overlaps, console errors, or page errors.
 - Monte Carlo convergence: all three 50k-versus-100k 99% VaR comparisons are below the approximate 2% target; ES differences are reported separately.
@@ -62,8 +62,8 @@ Tests exercise the public data/calendar, portfolio/P&L, risk-model, backtesting,
 
 ## Progress Contract
 
-1. Files created/changed: modular package, typed application layer, Streamlit dashboard, configurations, tests/fixtures, deterministic snapshot, notebook, report template, generated evidence, README, deployment/security guides, case study, and CV material.
-2. Functionality completed: full Core engineering flow on synthetic data, configurable review workspace, downloads, and optional guarded live adapter.
+1. Files created/changed: instrument catalog and portfolio domain, shared calculation service, typed application layer, Streamlit dashboard, configurations, tests/fixtures, deterministic snapshot, report template, generated evidence, README, case study, and CV material.
+2. Functionality completed: linked custom-portfolio recalculation across the full synthetic Core flow, configurable review workspace, portable downloads, and optional guarded live adapter.
 3. Commands executed: normal install, exact CLI snapshot run, pytest with coverage, Ruff, Streamlit AppTest, and desktop/mobile browser interaction checks.
 4. Actual result: Core mechanics work and reconcile; recruiter/historical evidence is deliberately not claimed.
 5. Assumptions: zero cash return, constant bond sensitivities between rebalances, zero-mean primary Normal models, sample covariance, and artificial offline factors.

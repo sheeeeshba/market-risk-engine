@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 — 2026-09-19
+
+- Added a validated 26-instrument catalog spanning equity ETFs, individual stocks, credit, TIPS, four Treasury tenors, precious metals, commodities, cash, and FX.
+- Added four portfolio presets and a responsive Portfolio Builder for adding/removing instruments, editing target weights, configuring the EUR/USD overlay, and calculating residual cash automatically.
+- Added one linked calculation service so allocation changes recalculate NAV/P&L, all VaR/ES models, rolling backtesting, contributions, scenarios, and downloadable evidence together.
+- Expanded the deterministic snapshot from 7 to 25 factors and made stress defaults asset-class aware so newly selected instruments remain covered.
+- Added portable in-memory reports/ZIP bundles for custom portfolios and expanded the suite to 34 tests.
+
 ## 1.0.0 — 2026-09-17
 
 - Added the responsive **Risk Ledger** Streamlit workspace with seven task-oriented tabs.

@@ -1,49 +1,151 @@
-scenario_id,position_id,scenario_name,scenario_type,horizon,factor,factor_shock,position_pnl,position_loss,duration_only_pnl
-global_equity_selloff,SPY,Global Equity Selloff,hypothetical,instantaneous_multi_factor,SPY_RETURN,-0.2,-373960.4606839674,373960.4606839674,-373960.4606839674
-global_equity_selloff,QQQ,Global Equity Selloff,hypothetical,instantaneous_multi_factor,QQQ_RETURN,-0.25,-230507.8512991434,230507.8512991434,-230507.8512991434
-global_equity_selloff,EFA,Global Equity Selloff,hypothetical,instantaneous_multi_factor,EFA_RETURN,-0.22,-202023.2082972787,202023.2082972787,-202023.2082972787
-global_equity_selloff,GLD,Global Equity Selloff,hypothetical,instantaneous_multi_factor,GLD_RETURN,0.05,22121.755818315953,-22121.755818315953,22121.755818315953
-global_equity_selloff,US5Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,-0.005,30446.40793934915,-30446.40793934915,30078.778425262608
-global_equity_selloff,US10Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,-0.005,54775.23383354122,-54775.23383354122,53602.675311110674
-global_equity_selloff,USD_CASH,Global Equity Selloff,hypothetical,instantaneous_multi_factor,CASH_RETURN,0.0,0.0,-0.0,0.0
-global_equity_selloff,EURUSD_OVERLAY,Global Equity Selloff,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,-0.05,-33816.10793742734,33816.10793742734,-33816.10793742734
-parallel_rates_up_100bp,SPY,Parallel Rates +100 bps,hypothetical,instantaneous,SPY_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_100bp,QQQ,Parallel Rates +100 bps,hypothetical,instantaneous,QQQ_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_100bp,EFA,Parallel Rates +100 bps,hypothetical,instantaneous,EFA_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_100bp,GLD,Parallel Rates +100 bps,hypothetical,instantaneous,GLD_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_100bp,US5Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS5_CHANGE,0.01,-58687.03879417904,58687.03879417904,-60157.556850525216
-parallel_rates_up_100bp,US10Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS10_CHANGE,0.01,-102515.11653249916,102515.11653249916,-107205.35062222135
-parallel_rates_up_100bp,USD_CASH,Parallel Rates +100 bps,hypothetical,instantaneous,CASH_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_100bp,EURUSD_OVERLAY,Parallel Rates +100 bps,hypothetical,instantaneous,EURUSD_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,SPY,Parallel Rates +200 bps,hypothetical,instantaneous,SPY_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,QQQ,Parallel Rates +200 bps,hypothetical,instantaneous,QQQ_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,EFA,Parallel Rates +200 bps,hypothetical,instantaneous,EFA_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,GLD,Parallel Rates +200 bps,hypothetical,instantaneous,GLD_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,US5Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS5_CHANGE,0.02,-114433.04147566573,114433.04147566573,-120315.11370105043
-parallel_rates_up_200bp,US10Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS10_CHANGE,0.02,-195649.76488555394,195649.76488555394,-214410.7012444427
-parallel_rates_up_200bp,USD_CASH,Parallel Rates +200 bps,hypothetical,instantaneous,CASH_RETURN,0.0,0.0,-0.0,0.0
-parallel_rates_up_200bp,EURUSD_OVERLAY,Parallel Rates +200 bps,hypothetical,instantaneous,EURUSD_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,SPY,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,SPY_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,QQQ,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,QQQ_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,EFA,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,EFA_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,GLD,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,GLD_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,US5Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS5_CHANGE,0.0,0.0,-0.0,-0.0
-foreign_currencies_down_10pct,US10Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS10_CHANGE,0.0,0.0,-0.0,-0.0
-foreign_currencies_down_10pct,USD_CASH,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,CASH_RETURN,0.0,0.0,-0.0,0.0
-foreign_currencies_down_10pct,EURUSD_OVERLAY,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,EURUSD_RETURN,-0.1,-67632.21587485468,67632.21587485468,-67632.21587485468
-stocks_and_bonds_fall,SPY,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,SPY_RETURN,-0.2,-373960.4606839674,373960.4606839674,-373960.4606839674
-stocks_and_bonds_fall,QQQ,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,QQQ_RETURN,-0.2,-184406.28103931472,184406.28103931472,-184406.28103931472
-stocks_and_bonds_fall,EFA,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,EFA_RETURN,-0.2,-183657.4620884352,183657.4620884352,-183657.4620884352
-stocks_and_bonds_fall,GLD,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,GLD_RETURN,-0.07,-30970.458145642333,30970.458145642333,-30970.458145642333
-stocks_and_bonds_fall,US5Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,0.015,-86927.66964900892,86927.66964900892,-90236.33527578782
-stocks_and_bonds_fall,US10Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,0.015,-150254.9992314571,150254.9992314571,-160808.025933332
-stocks_and_bonds_fall,USD_CASH,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,CASH_RETURN,0.0,0.0,-0.0,0.0
-stocks_and_bonds_fall,EURUSD_OVERLAY,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,-0.05,-33816.10793742734,33816.10793742734,-33816.10793742734
-flight_to_quality,SPY,Flight to Quality,hypothetical,instantaneous_multi_factor,SPY_RETURN,-0.2,-373960.4606839674,373960.4606839674,-373960.4606839674
-flight_to_quality,QQQ,Flight to Quality,hypothetical,instantaneous_multi_factor,QQQ_RETURN,-0.2,-184406.28103931472,184406.28103931472,-184406.28103931472
-flight_to_quality,EFA,Flight to Quality,hypothetical,instantaneous_multi_factor,EFA_RETURN,-0.2,-183657.4620884352,183657.4620884352,-183657.4620884352
-flight_to_quality,GLD,Flight to Quality,hypothetical,instantaneous_multi_factor,GLD_RETURN,0.08,35394.80930930552,-35394.80930930552,35394.80930930552
-flight_to_quality,US5Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,-0.01,61628.07490687138,-61628.07490687138,60157.556850525216
-flight_to_quality,US10Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,-0.01,111895.58471194353,-111895.58471194353,107205.35062222135
-flight_to_quality,USD_CASH,Flight to Quality,hypothetical,instantaneous_multi_factor,CASH_RETURN,0.0,0.0,-0.0,0.0
-flight_to_quality,EURUSD_OVERLAY,Flight to Quality,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,-0.07,-47342.55111239827,47342.55111239827,-47342.55111239827
+scenario_id,position_id,scenario_name,scenario_type,horizon,factor,asset_class,factor_shock,position_pnl,position_loss,duration_only_pnl
+global_equity_selloff,SPY,Global Equity Selloff,hypothetical,instantaneous_multi_factor,SPY_RETURN,US Equity,-0.2,-179800.48745280565,179800.48745280565,-179800.48745280565
+global_equity_selloff,QQQ,Global Equity Selloff,hypothetical,instantaneous_multi_factor,QQQ_RETURN,US Equity,-0.2,-87141.92616966924,87141.92616966924,-87141.92616966924
+global_equity_selloff,IWM,Global Equity Selloff,hypothetical,instantaneous_multi_factor,IWM_RETURN,US Equity,-0.2,-72616.2453926071,72616.2453926071,-72616.2453926071
+global_equity_selloff,EFA,Global Equity Selloff,hypothetical,instantaneous_multi_factor,EFA_RETURN,International Equity,-0.22,-138744.7518466817,138744.7518466817,-138744.7518466817
+global_equity_selloff,EEM,Global Equity Selloff,hypothetical,instantaneous_multi_factor,EEM_RETURN,Emerging Markets Equity,-0.25,-89951.66398582865,89951.66398582865,-89951.66398582865
+global_equity_selloff,VNQ,Global Equity Selloff,hypothetical,instantaneous_multi_factor,VNQ_RETURN,Real Estate,-0.22,-60812.627333032884,60812.627333032884,-60812.627333032884
+global_equity_selloff,AAPL,Global Equity Selloff,hypothetical,instantaneous_multi_factor,AAPL_RETURN,US Equity,-0.2,-35524.6042494767,35524.6042494767,-35524.6042494767
+global_equity_selloff,MSFT,Global Equity Selloff,hypothetical,instantaneous_multi_factor,MSFT_RETURN,US Equity,-0.2,-36217.09600750351,36217.09600750351,-36217.09600750351
+global_equity_selloff,JPM,Global Equity Selloff,hypothetical,instantaneous_multi_factor,JPM_RETURN,US Equity,-0.2,-36852.33397233917,36852.33397233917,-36852.33397233917
+global_equity_selloff,JNJ,Global Equity Selloff,hypothetical,instantaneous_multi_factor,JNJ_RETURN,US Equity,-0.2,-35963.96809338105,35963.96809338105,-35963.96809338105
+global_equity_selloff,XOM,Global Equity Selloff,hypothetical,instantaneous_multi_factor,XOM_RETURN,US Equity,-0.2,-36875.73584622409,36875.73584622409,-36875.73584622409
+global_equity_selloff,LQD,Global Equity Selloff,hypothetical,instantaneous_multi_factor,LQD_RETURN,Investment Grade Credit,-0.08,-43652.89893635278,43652.89893635278,-43652.89893635278
+global_equity_selloff,HYG,Global Equity Selloff,hypothetical,instantaneous_multi_factor,HYG_RETURN,High Yield Credit,-0.15,-54025.70160733893,54025.70160733893,-54025.70160733893
+global_equity_selloff,TIP,Global Equity Selloff,hypothetical,instantaneous_multi_factor,TIP_RETURN,Inflation-Linked Bonds,-0.03,-13748.392395428056,13748.392395428056,-13748.392395428056
+global_equity_selloff,US2Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS2_CHANGE,Government Bonds,-0.004,3524.848403126339,-3524.848403126339,3510.0691645388074
+global_equity_selloff,US5Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,Government Bonds,-0.005,12564.603053052095,-12564.603053052095,12412.889953618975
+global_equity_selloff,US10Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,Government Bonds,-0.005,22695.916080982694,-22695.916080982694,22210.070782613035
+global_equity_selloff,US30Y,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DGS30_CHANGE,Government Bonds,-0.004,18967.34061205092,-18967.34061205092,18299.93135101394
+global_equity_selloff,GLD,Global Equity Selloff,hypothetical,instantaneous_multi_factor,GLD_RETURN,Precious Metals,0.05,27233.54196513088,-27233.54196513088,27233.54196513088
+global_equity_selloff,SLV,Global Equity Selloff,hypothetical,instantaneous_multi_factor,SLV_RETURN,Precious Metals,0.05,9248.346903055268,-9248.346903055268,9248.346903055268
+global_equity_selloff,PPLT,Global Equity Selloff,hypothetical,instantaneous_multi_factor,PPLT_RETURN,Precious Metals,0.05,4758.8207476553425,-4758.8207476553425,4758.8207476553425
+global_equity_selloff,DBC,Global Equity Selloff,hypothetical,instantaneous_multi_factor,DBC_RETURN,Commodities,-0.1,-36057.03039784714,36057.03039784714,-36057.03039784714
+global_equity_selloff,USO,Global Equity Selloff,hypothetical,instantaneous_multi_factor,USO_RETURN,Commodities,-0.1,-16083.523901286571,16083.523901286571,-16083.523901286571
+global_equity_selloff,USD_CASH,Global Equity Selloff,hypothetical,instantaneous_multi_factor,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+global_equity_selloff,EURUSD_OVERLAY,Global Equity Selloff,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,FX,-0.05,-23110.14359851644,23110.14359851644,-23110.14359851644
+parallel_rates_up_100bp,SPY,Parallel Rates +100 bps,hypothetical,instantaneous,SPY_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,QQQ,Parallel Rates +100 bps,hypothetical,instantaneous,QQQ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,IWM,Parallel Rates +100 bps,hypothetical,instantaneous,IWM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,EFA,Parallel Rates +100 bps,hypothetical,instantaneous,EFA_RETURN,International Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,EEM,Parallel Rates +100 bps,hypothetical,instantaneous,EEM_RETURN,Emerging Markets Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,VNQ,Parallel Rates +100 bps,hypothetical,instantaneous,VNQ_RETURN,Real Estate,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,AAPL,Parallel Rates +100 bps,hypothetical,instantaneous,AAPL_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,MSFT,Parallel Rates +100 bps,hypothetical,instantaneous,MSFT_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,JPM,Parallel Rates +100 bps,hypothetical,instantaneous,JPM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,JNJ,Parallel Rates +100 bps,hypothetical,instantaneous,JNJ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,XOM,Parallel Rates +100 bps,hypothetical,instantaneous,XOM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,LQD,Parallel Rates +100 bps,hypothetical,instantaneous,LQD_RETURN,Investment Grade Credit,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,HYG,Parallel Rates +100 bps,hypothetical,instantaneous,HYG_RETURN,High Yield Credit,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,TIP,Parallel Rates +100 bps,hypothetical,instantaneous,TIP_RETURN,Inflation-Linked Bonds,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,US2Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS2_CHANGE,Government Bonds,0.01,-8682.802670174944,8682.802670174944,-8775.17291134702
+parallel_rates_up_100bp,US5Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS5_CHANGE,Government Bonds,0.01,-24218.927509505465,24218.927509505465,-24825.77990723795
+parallel_rates_up_100bp,US10Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS10_CHANGE,Government Bonds,0.01,-42476.76037174743,42476.76037174743,-44420.14156522607
+parallel_rates_up_100bp,US30Y,Parallel Rates +100 bps,hypothetical,instantaneous,DGS30_CHANGE,Government Bonds,0.01,-41578.52049605374,41578.52049605374,-45749.828377534854
+parallel_rates_up_100bp,GLD,Parallel Rates +100 bps,hypothetical,instantaneous,GLD_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,SLV,Parallel Rates +100 bps,hypothetical,instantaneous,SLV_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,PPLT,Parallel Rates +100 bps,hypothetical,instantaneous,PPLT_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,DBC,Parallel Rates +100 bps,hypothetical,instantaneous,DBC_RETURN,Commodities,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,USO,Parallel Rates +100 bps,hypothetical,instantaneous,USO_RETURN,Commodities,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,USD_CASH,Parallel Rates +100 bps,hypothetical,instantaneous,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+parallel_rates_up_100bp,EURUSD_OVERLAY,Parallel Rates +100 bps,hypothetical,instantaneous,EURUSD_RETURN,FX,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,SPY,Parallel Rates +200 bps,hypothetical,instantaneous,SPY_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,QQQ,Parallel Rates +200 bps,hypothetical,instantaneous,QQQ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,IWM,Parallel Rates +200 bps,hypothetical,instantaneous,IWM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,EFA,Parallel Rates +200 bps,hypothetical,instantaneous,EFA_RETURN,International Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,EEM,Parallel Rates +200 bps,hypothetical,instantaneous,EEM_RETURN,Emerging Markets Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,VNQ,Parallel Rates +200 bps,hypothetical,instantaneous,VNQ_RETURN,Real Estate,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,AAPL,Parallel Rates +200 bps,hypothetical,instantaneous,AAPL_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,MSFT,Parallel Rates +200 bps,hypothetical,instantaneous,MSFT_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,JPM,Parallel Rates +200 bps,hypothetical,instantaneous,JPM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,JNJ,Parallel Rates +200 bps,hypothetical,instantaneous,JNJ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,XOM,Parallel Rates +200 bps,hypothetical,instantaneous,XOM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,LQD,Parallel Rates +200 bps,hypothetical,instantaneous,LQD_RETURN,Investment Grade Credit,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,HYG,Parallel Rates +200 bps,hypothetical,instantaneous,HYG_RETURN,High Yield Credit,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,TIP,Parallel Rates +200 bps,hypothetical,instantaneous,TIP_RETURN,Inflation-Linked Bonds,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,US2Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS2_CHANGE,Government Bonds,0.02,-17180.864858005738,17180.864858005738,-17550.34582269404
+parallel_rates_up_200bp,US5Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS5_CHANGE,Government Bonds,0.02,-47224.15022354596,47224.15022354596,-49651.5598144759
+parallel_rates_up_200bp,US10Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS10_CHANGE,Government Bonds,0.02,-81066.75835653757,81066.75835653757,-88840.28313045214
+parallel_rates_up_200bp,US30Y,Parallel Rates +200 bps,hypothetical,instantaneous,DGS30_CHANGE,Government Bonds,0.02,-74814.42522914523,74814.42522914523,-91499.65675506971
+parallel_rates_up_200bp,GLD,Parallel Rates +200 bps,hypothetical,instantaneous,GLD_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,SLV,Parallel Rates +200 bps,hypothetical,instantaneous,SLV_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,PPLT,Parallel Rates +200 bps,hypothetical,instantaneous,PPLT_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,DBC,Parallel Rates +200 bps,hypothetical,instantaneous,DBC_RETURN,Commodities,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,USO,Parallel Rates +200 bps,hypothetical,instantaneous,USO_RETURN,Commodities,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,USD_CASH,Parallel Rates +200 bps,hypothetical,instantaneous,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+parallel_rates_up_200bp,EURUSD_OVERLAY,Parallel Rates +200 bps,hypothetical,instantaneous,EURUSD_RETURN,FX,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,SPY,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,SPY_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,QQQ,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,QQQ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,IWM,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,IWM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,EFA,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,EFA_RETURN,International Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,EEM,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,EEM_RETURN,Emerging Markets Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,VNQ,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,VNQ_RETURN,Real Estate,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,AAPL,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,AAPL_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,MSFT,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,MSFT_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,JPM,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,JPM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,JNJ,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,JNJ_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,XOM,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,XOM_RETURN,US Equity,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,LQD,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,LQD_RETURN,Investment Grade Credit,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,HYG,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,HYG_RETURN,High Yield Credit,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,TIP,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,TIP_RETURN,Inflation-Linked Bonds,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,US2Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS2_CHANGE,Government Bonds,0.0,0.0,-0.0,-0.0
+foreign_currencies_down_10pct,US5Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS5_CHANGE,Government Bonds,0.0,0.0,-0.0,-0.0
+foreign_currencies_down_10pct,US10Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS10_CHANGE,Government Bonds,0.0,0.0,-0.0,-0.0
+foreign_currencies_down_10pct,US30Y,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DGS30_CHANGE,Government Bonds,0.0,0.0,-0.0,-0.0
+foreign_currencies_down_10pct,GLD,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,GLD_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,SLV,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,SLV_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,PPLT,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,PPLT_RETURN,Precious Metals,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,DBC,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,DBC_RETURN,Commodities,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,USO,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,USO_RETURN,Commodities,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,USD_CASH,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+foreign_currencies_down_10pct,EURUSD_OVERLAY,Foreign Currencies Depreciate 10% versus USD,hypothetical,instantaneous,EURUSD_RETURN,FX,-0.1,-46220.28719703288,46220.28719703288,-46220.28719703288
+stocks_and_bonds_fall,SPY,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,SPY_RETURN,US Equity,-0.2,-179800.48745280565,179800.48745280565,-179800.48745280565
+stocks_and_bonds_fall,QQQ,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,QQQ_RETURN,US Equity,-0.2,-87141.92616966924,87141.92616966924,-87141.92616966924
+stocks_and_bonds_fall,IWM,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,IWM_RETURN,US Equity,-0.2,-72616.2453926071,72616.2453926071,-72616.2453926071
+stocks_and_bonds_fall,EFA,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,EFA_RETURN,International Equity,-0.2,-126131.59258789246,126131.59258789246,-126131.59258789246
+stocks_and_bonds_fall,EEM,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,EEM_RETURN,Emerging Markets Equity,-0.23,-82755.53086696236,82755.53086696236,-82755.53086696236
+stocks_and_bonds_fall,VNQ,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,VNQ_RETURN,Real Estate,-0.25,-69105.25833299191,69105.25833299191,-69105.25833299191
+stocks_and_bonds_fall,AAPL,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,AAPL_RETURN,US Equity,-0.2,-35524.6042494767,35524.6042494767,-35524.6042494767
+stocks_and_bonds_fall,MSFT,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,MSFT_RETURN,US Equity,-0.2,-36217.09600750351,36217.09600750351,-36217.09600750351
+stocks_and_bonds_fall,JPM,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,JPM_RETURN,US Equity,-0.2,-36852.33397233917,36852.33397233917,-36852.33397233917
+stocks_and_bonds_fall,JNJ,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,JNJ_RETURN,US Equity,-0.2,-35963.96809338105,35963.96809338105,-35963.96809338105
+stocks_and_bonds_fall,XOM,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,XOM_RETURN,US Equity,-0.2,-36875.73584622409,36875.73584622409,-36875.73584622409
+stocks_and_bonds_fall,LQD,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,LQD_RETURN,Investment Grade Credit,-0.1,-54566.123670440975,54566.123670440975,-54566.123670440975
+stocks_and_bonds_fall,HYG,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,HYG_RETURN,High Yield Credit,-0.14,-50423.988166849675,50423.988166849675,-50423.988166849675
+stocks_and_bonds_fall,TIP,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,TIP_RETURN,Inflation-Linked Bonds,-0.08,-36662.379721141486,36662.379721141486,-36662.379721141486
+stocks_and_bonds_fall,US2Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS2_CHANGE,Government Bonds,0.015,-12954.926324383361,12954.926324383361,-13162.759367020526
+stocks_and_bonds_fall,US5Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,Government Bonds,0.015,-35873.251965958836,35873.251965958836,-37238.66986085692
+stocks_and_bonds_fall,US10Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,Government Bonds,0.015,-62257.60466251216,62257.60466251216,-66630.2123478391
+stocks_and_bonds_fall,US30Y,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DGS30_CHANGE,Government Bonds,0.015,-59239.299832969766,59239.299832969766,-68624.74256630227
+stocks_and_bonds_fall,GLD,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,GLD_RETURN,Precious Metals,-0.07,-38126.958751183236,38126.958751183236,-38126.958751183236
+stocks_and_bonds_fall,SLV,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,SLV_RETURN,Precious Metals,-0.07,-12947.685664277376,12947.685664277376,-12947.685664277376
+stocks_and_bonds_fall,PPLT,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,PPLT_RETURN,Precious Metals,-0.07,-6662.34904671748,6662.34904671748,-6662.34904671748
+stocks_and_bonds_fall,DBC,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,DBC_RETURN,Commodities,-0.12,-43268.436477416566,43268.436477416566,-43268.436477416566
+stocks_and_bonds_fall,USO,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,USO_RETURN,Commodities,-0.12,-19300.228681543882,19300.228681543882,-19300.228681543882
+stocks_and_bonds_fall,USD_CASH,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+stocks_and_bonds_fall,EURUSD_OVERLAY,Stocks and Bonds Fall Together,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,FX,-0.05,-23110.14359851644,23110.14359851644,-23110.14359851644
+flight_to_quality,SPY,Flight to Quality,hypothetical,instantaneous_multi_factor,SPY_RETURN,US Equity,-0.2,-179800.48745280565,179800.48745280565,-179800.48745280565
+flight_to_quality,QQQ,Flight to Quality,hypothetical,instantaneous_multi_factor,QQQ_RETURN,US Equity,-0.2,-87141.92616966924,87141.92616966924,-87141.92616966924
+flight_to_quality,IWM,Flight to Quality,hypothetical,instantaneous_multi_factor,IWM_RETURN,US Equity,-0.2,-72616.2453926071,72616.2453926071,-72616.2453926071
+flight_to_quality,EFA,Flight to Quality,hypothetical,instantaneous_multi_factor,EFA_RETURN,International Equity,-0.22,-138744.7518466817,138744.7518466817,-138744.7518466817
+flight_to_quality,EEM,Flight to Quality,hypothetical,instantaneous_multi_factor,EEM_RETURN,Emerging Markets Equity,-0.25,-89951.66398582865,89951.66398582865,-89951.66398582865
+flight_to_quality,VNQ,Flight to Quality,hypothetical,instantaneous_multi_factor,VNQ_RETURN,Real Estate,-0.18,-49755.785999754175,49755.785999754175,-49755.785999754175
+flight_to_quality,AAPL,Flight to Quality,hypothetical,instantaneous_multi_factor,AAPL_RETURN,US Equity,-0.2,-35524.6042494767,35524.6042494767,-35524.6042494767
+flight_to_quality,MSFT,Flight to Quality,hypothetical,instantaneous_multi_factor,MSFT_RETURN,US Equity,-0.2,-36217.09600750351,36217.09600750351,-36217.09600750351
+flight_to_quality,JPM,Flight to Quality,hypothetical,instantaneous_multi_factor,JPM_RETURN,US Equity,-0.2,-36852.33397233917,36852.33397233917,-36852.33397233917
+flight_to_quality,JNJ,Flight to Quality,hypothetical,instantaneous_multi_factor,JNJ_RETURN,US Equity,-0.2,-35963.96809338105,35963.96809338105,-35963.96809338105
+flight_to_quality,XOM,Flight to Quality,hypothetical,instantaneous_multi_factor,XOM_RETURN,US Equity,-0.2,-36875.73584622409,36875.73584622409,-36875.73584622409
+flight_to_quality,LQD,Flight to Quality,hypothetical,instantaneous_multi_factor,LQD_RETURN,Investment Grade Credit,-0.04,-21826.44946817639,21826.44946817639,-21826.44946817639
+flight_to_quality,HYG,Flight to Quality,hypothetical,instantaneous_multi_factor,HYG_RETURN,High Yield Credit,-0.12,-43220.56128587114,43220.56128587114,-43220.56128587114
+flight_to_quality,TIP,Flight to Quality,hypothetical,instantaneous_multi_factor,TIP_RETURN,Inflation-Linked Bonds,0.02,9165.594930285371,-9165.594930285371,9165.594930285371
+flight_to_quality,US2Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS2_CHANGE,Government Bonds,-0.008,7079.255283427741,-7079.255283427741,7020.138329077615
+flight_to_quality,US5Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS5_CHANGE,Government Bonds,-0.01,25432.63230497043,-25432.63230497043,24825.77990723795
+flight_to_quality,US10Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS10_CHANGE,Government Bonds,-0.01,46363.522758704705,-46363.522758704705,44420.14156522607
+flight_to_quality,US30Y,Flight to Quality,hypothetical,instantaneous_multi_factor,DGS30_CHANGE,Government Bonds,-0.009,44553.60492378107,-44553.60492378107,41174.84553978136
+flight_to_quality,GLD,Flight to Quality,hypothetical,instantaneous_multi_factor,GLD_RETURN,Precious Metals,0.08,43573.66714420941,-43573.66714420941,43573.66714420941
+flight_to_quality,SLV,Flight to Quality,hypothetical,instantaneous_multi_factor,SLV_RETURN,Precious Metals,0.08,14797.355044888429,-14797.355044888429,14797.355044888429
+flight_to_quality,PPLT,Flight to Quality,hypothetical,instantaneous_multi_factor,PPLT_RETURN,Precious Metals,0.08,7614.113196248547,-7614.113196248547,7614.113196248547
+flight_to_quality,DBC,Flight to Quality,hypothetical,instantaneous_multi_factor,DBC_RETURN,Commodities,-0.08,-28845.62431827771,28845.62431827771,-28845.62431827771
+flight_to_quality,USO,Flight to Quality,hypothetical,instantaneous_multi_factor,USO_RETURN,Commodities,-0.08,-12866.819121029257,12866.819121029257,-12866.819121029257
+flight_to_quality,USD_CASH,Flight to Quality,hypothetical,instantaneous_multi_factor,CASH_RETURN,Cash,0.0,0.0,-0.0,0.0
+flight_to_quality,EURUSD_OVERLAY,Flight to Quality,hypothetical,instantaneous_multi_factor,EURUSD_RETURN,FX,-0.07,-32354.201037923016,32354.201037923016,-32354.201037923016

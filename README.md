@@ -9,7 +9,7 @@
 
 An end-to-end Python market-risk platform that turns a configurable multi-asset portfolio into hypothetical P&L, VaR and Expected Shortfall, rolling backtests, stress losses, risk contributions, and downloadable management evidence.
 
-The **Risk Ledger** workspace is built for review: clear navigation, consistent financial formatting, responsive charts, and controls for confidence level, models, time window, display units, USD versus `% of NAV`, and the number of risk drivers shown.
+The **Risk Ledger** workspace is built for review and experimentation: a linked portfolio builder, clear navigation, consistent financial formatting, responsive charts, and controls for confidence level, models, time window, display units, USD versus `% of NAV`, and the number of risk drivers shown.
 
 > **Evidence boundary:** the bundled Demo uses a deterministic synthetic snapshot. Its values prove that the engineering workflow runs reproducibly; they are not historical performance, investment results, or regulatory-model evidence.
 
@@ -43,8 +43,9 @@ The sidebar changes presentation without silently changing the underlying calcul
 | Risk chart basis | USD loss or percentage of portfolio NAV |
 | Risk drivers shown | Number of component-VaR positions displayed |
 
-Seven task-oriented tabs keep the analysis readable:
+Eight task-oriented tabs keep the analysis readable:
 
+- **Portfolio builder** — add/remove approved instruments, edit target weights, inspect residual cash and the allocation preview, then recalculate every risk layer together.
 - **Overview** — NAV, selected VaR/ES ranges, stress severity, exceptions, and portfolio path.
 - **Risk models** — grouped model comparison or configurable confidence curve.
 - **Backtesting** — rolling 99% VaR, realized hypothetical loss, breaches, and test diagnostics.
@@ -53,9 +54,11 @@ Seven task-oriented tabs keep the analysis readable:
 - **Portfolio & P&L** — switchable NAV, daily P&L, and cumulative P&L charts plus closing holdings.
 - **Evidence & downloads** — management report, one-page summary, complete ZIP, manifest, and figures.
 
+![Configurable portfolio builder](docs/assets/portfolio-builder.png)
+
 ## Quantitative Scope
 
-- Canonical USD 10 million funded portfolio plus a separately accounted long-EUR overlay.
+- Configurable USD 10 million portfolio selected from a 26-instrument catalog plus an optional separately accounted EUR/USD overlay.
 - Adjusted-return ETF P&L, duration-convexity bond P&L, direct EURUSD P&L, monthly self-financing rebalancing, and daily NAV reconciliation.
 - Historical Simulation, linear Parametric Normal, and full-revaluation Monte Carlo VaR/ES at 95%, 97.5%, and 99%.
 - Exact finite-sample Historical ES weights, including equal treatment of scenarios tied at the VaR boundary.
@@ -69,27 +72,28 @@ Seven task-oriented tabs keep the analysis readable:
 ```mermaid
 flowchart LR
     A["Synthetic snapshot or live providers"] --> B["Validated common calendar"]
-    B --> C["Portfolio accounting and hypothetical P&L"]
-    C --> D["VaR, ES, backtesting, contributions, stress"]
-    D --> E["MarketRiskPlatform validation layer"]
-    E --> F["Risk Ledger Streamlit workspace"]
-    E --> G["CLI and typed Python result"]
-    E --> H["Reports, figures, CSVs, ZIP bundle"]
-    H --> I["Verification manifest"]
+    B --> C["Catalog + validated user allocation"]
+    C --> D["Portfolio accounting and hypothetical P&L"]
+    D --> E["VaR, ES, backtesting, contributions, stress"]
+    E --> F["MarketRiskPlatform validation layer"]
+    F --> G["Risk Ledger Streamlit workspace"]
+    F --> H["CLI and typed Python result"]
+    F --> I["Reports, figures, CSVs, ZIP bundle"]
+    I --> J["Verification manifest"]
 ```
 
-`MarketRiskPlatform.analyze()` is the compact application boundary. It either loads committed evidence or refreshes the full engine, validates required artifacts, and returns a typed `MarketRiskAnalysis` object consumed by the UI and download layer.
+`MarketRiskPlatform.analyze()` loads or refreshes committed evidence. `MarketRiskPlatform.analyze_portfolio()` accepts a validated user allocation and recalculates the same accounting, VaR/ES, rolling backtesting, contribution, and stress layers in memory. Both return the typed `MarketRiskAnalysis` object consumed by the UI and download layer.
 
 ## Portfolio and Data
 
-Funded target weights are SPY 20%, QQQ 10%, EFA 10%, GLD 5%, US 5Y bond 15%, US 10Y bond 15%, and USD cash 25%. They sum to 100% of NAV. A long-EUR/short-USD overlay has zero funded market value and a risk notional equal to 7.5% of post-rebalance NAV.
+The approved catalog contains broad and international equity ETFs, six individual US stocks, corporate-credit and inflation-linked bond ETFs, synthetic 2Y/5Y/10Y/30Y Treasury positions, gold, silver, platinum, broad commodities, oil, USD cash, and an EUR/USD overlay. Four named presets provide starting points; the default diversified allocation invests 93% and calculates the remaining 7% as cash. Users can add/remove instruments and change weights, while the funding identity always remains 100% of NAV.
 
-The repository includes a fixed 520-row artificial factor snapshot for offline verification. Optional live mode downloads ETF and EURUSD levels through `yfinance` and DGS5/DGS10 observations from FRED, then rebuilds the common calendar. Provider data are not bundled as a verified real-data snapshot.
+The repository includes a fixed 520-row, 25-factor artificial snapshot for offline verification. Optional live mode downloads approved market-price and EURUSD levels through `yfinance` and DGS2/DGS5/DGS10/DGS30 observations from FRED, then rebuilds the common calendar. Provider data are not bundled as a verified real-data snapshot.
 
 ## Financial Conventions
 
 - Positive P&L is profit; loss is `-P&L`; VaR and ES are positive loss magnitudes.
-- ETF P&L is signed book market value multiplied by adjusted simple return.
+- Stock and ETF P&L is signed book market value multiplied by adjusted simple return.
 - Bond return is `-Modified Duration × ΔYield + 0.5 × Convexity × ΔYield²`, using decimal yield changes.
 - FX P&L is signed USD-equivalent notional multiplied by EURUSD return, where EURUSD is USD per EUR.
 - Every rolling forecast uses exactly 250 factor rows ending at close `t`, end-of-`t` holdings, and next-valid-date P&L at `t_next`.
@@ -128,7 +132,7 @@ python -m ruff check .
 MPLCONFIGDIR=.mplconfig python -m pytest --cov=market_risk --cov-report=term-missing
 ```
 
-The current suite contains **28 passing tests**, including Streamlit application tests. It covers data alignment, P&L signs, funding and overlay accounting, Historical tail weights, Normal and Monte Carlo risk, contributions, scenario reconciliation, backtesting edge cases, look-ahead alignment, platform artifact validation, downloads, live-mode gating, and interactive view controls.
+The current suite contains **34 passing tests**, including portfolio-builder and Streamlit application tests. It covers catalog/allocation validation, linked add/remove/reweight recalculation, data alignment, P&L signs, funding and overlay accounting, Historical tail weights, Normal and Monte Carlo risk, contributions, scenario reconciliation, backtesting edge cases, look-ahead alignment, platform artifacts and in-memory bundles, live-mode gating, and interactive view controls.
 
 GitHub Actions repeats linting, tests, coverage reporting, and a CLI smoke test on Python 3.11 and 3.12. The generated manifest records the pipeline and quality-gate provenance; never infer a pass from this README alone after changing code or configuration.
 
@@ -138,7 +142,7 @@ GitHub Actions repeats linting, tests, coverage reporting, and a CLI smoke test 
 streamlit_app.py          Interactive Risk Ledger workspace
 src/market_risk/          Quant engine, platform interface, CLI, and models
 tests/                    Financial-behaviour, integration, platform, and UI tests
-config/                   Portfolio, model, scenario, and crisis configuration
+config/                   Instrument catalog, portfolio presets, model, scenario, and crisis configuration
 data/snapshots/           Deterministic synthetic review fixture
 outputs/                  Generated tables, figures, logs, and verification manifest
 reports/generated/        Management report and one-page summary
@@ -152,7 +156,7 @@ The committed artificial run processes 520 factor rows, produces 270 rolling for
 ## Limitations
 
 - Bundled data are artificial and unsuitable for historical conclusions or resume performance metrics.
-- ETFs are synthetic total-return holdings; transaction costs, fees, taxes, and trading slippage are omitted.
+- Stocks and ETFs are synthetic total-return holdings; transaction costs, fees, taxes, and trading slippage are omitted.
 - Bonds are constant-sensitivity representations without coupon/carry, ageing, pull-to-par, or full cash-flow repricing.
 - Cash earns zero and the FX overlay is treated as zero funded value with daily cash settlement.
 - Normal covariance models miss skewness, fat tails, volatility dynamics, and parameter uncertainty.

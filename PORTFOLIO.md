@@ -7,8 +7,8 @@
 
 - Developed an end-to-end market-risk platform for a configurable multi-asset portfolio, implementing Historical Simulation, Parametric Normal, and full-revaluation Monte Carlo VaR/Expected Shortfall at 95%, 97.5%, and 99% confidence levels.
 - Engineered leak-free rolling backtesting with Kupiec and Christoffersen diagnostics, duration-convexity and FX P&L, additive risk contributions, six stress scenarios, and volatility/correlation stress testing.
-- Built an interactive Streamlit risk-control workspace with model comparison, exception monitoring, concentration and stress views, downloadable management evidence, reproducibility hashes, and automated CI tests.
-- Added reviewer-facing controls for confidence level, model selection, history window, financial units, USD/%NAV basis, and risk-driver depth; validated the interface with 28 automated tests and desktop/mobile browser checks.
+- Built an interactive Streamlit workspace with a 26-instrument portfolio builder; add/remove/reweight actions trigger linked NAV, VaR/ES, backtesting, contribution, and stress recalculation.
+- Added reviewer-facing controls for confidence level, model selection, history window, financial units, USD/%NAV basis, and risk-driver depth; validated the interface with 34 automated tests and responsive browser checks.
 
 ## Short CV version
 

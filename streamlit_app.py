@@ -27,8 +27,9 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 from market_risk.models import MarketRiskAnalysis  # noqa: E402
 from market_risk.platform import MarketRiskPlatform  # noqa: E402
+from market_risk.portfolio_builder import PortfolioAllocation  # noqa: E402
 
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.1.0"
 
 COLORS = {
     "paper": "#F4F6F8",
@@ -800,11 +801,20 @@ def _run_analysis(mode: str, fred_key: str, run_requested: bool) -> MarketRiskAn
     if run_requested:
         try:
             with st.spinner("Running portfolio, model, backtesting, and stress layers…"):
-                st.session_state.analysis = MarketRiskPlatform(PROJECT_ROOT).analyze(
-                    data_mode=mode,
-                    refresh=True,
-                    fred_api_key=fred_key or None,
-                )
+                platform = MarketRiskPlatform(PROJECT_ROOT)
+                active_allocation = st.session_state.get("active_allocation")
+                if isinstance(active_allocation, PortfolioAllocation):
+                    st.session_state.analysis = platform.analyze_portfolio(
+                        active_allocation,
+                        data_mode=mode,
+                        fred_api_key=fred_key or None,
+                    )
+                else:
+                    st.session_state.analysis = platform.analyze(
+                        data_mode=mode,
+                        refresh=True,
+                        fred_api_key=fred_key or None,
+                    )
         except Exception as error:  # Streamlit must turn operational failures into guidance.
             st.error(f"Analysis did not run: {error}")
             st.info(
@@ -812,6 +822,234 @@ def _run_analysis(mode: str, fred_key: str, run_requested: bool) -> MarketRiskAn
                 "`pip install '.[live]'` and a valid FRED API key."
             )
     return st.session_state.analysis
+
+
+def _allocation_preview(allocation: pd.DataFrame, cash_weight: float) -> go.Figure:
+    """Show the draft allocation before the expensive linked recalculation."""
+
+    preview = allocation[allocation["Weight %"] > 0.0].copy()
+    grouped = preview.groupby("Asset class", sort=False)["Weight %"].sum()
+    labels = grouped.index.tolist()
+    values = grouped.tolist()
+    colors = [COLORS["blue"], COLORS["teal"], COLORS["amber"], "#6D597A", "#4F772D"]
+    if cash_weight > 1e-9:
+        labels.append("USD cash")
+        values.append(cash_weight * 100.0)
+    figure = go.Figure(
+        go.Pie(
+            labels=labels,
+            values=values,
+            hole=0.58,
+            sort=False,
+            textinfo="label+percent",
+            textposition="inside",
+            insidetextorientation="horizontal",
+            marker={"colors": [colors[index % len(colors)] for index in range(len(labels))]},
+            hovertemplate="%{label}<br>%{value:.2f}% of NAV<extra></extra>",
+        )
+    )
+    figure.update_layout(uniformtext_minsize=10, uniformtext_mode="hide")
+    return _plot_layout(
+        figure,
+        "Draft allocation by asset class",
+        height=520,
+        legend=False,
+        left_margin=25,
+    )
+
+
+def _render_portfolio_builder(
+    result: MarketRiskAnalysis,
+    mode: str,
+    fred_key: str,
+) -> None:
+    _section_intro(
+        "Build your portfolio",
+        "Choose approved stocks, ETFs, bonds, precious metals, commodities, and an FX "
+        "overlay. Edit target weights, review residual cash, then apply once to recalculate "
+        "NAV, VaR/ES, backtesting, stress losses, and risk contributions together.",
+    )
+    platform = MarketRiskPlatform(PROJECT_ROOT)
+    catalog = platform.portfolio_catalog()
+    library = platform.portfolio_library()
+    preset_table = library.preset_table().set_index("preset_key")
+    preset_keys = list(library.presets)
+    preset_key = st.selectbox(
+        "Starting allocation",
+        preset_keys,
+        index=preset_keys.index(library.default_preset),
+        format_func=lambda key: str(preset_table.loc[key, "name"]),
+        help="A preset is only a starting point; every selected weight remains editable.",
+        key="portfolio_preset",
+    )
+    preset = library.allocation(preset_key)
+    st.caption(str(preset_table.loc[preset_key, "description"]))
+
+    choices = catalog.funded_choices
+    by_id = catalog.by_id
+    option_ids = [item.instrument_id for item in choices]
+    labels = {
+        item.instrument_id: f"{item.instrument_id} · {item.asset_class} · {item.name}"
+        for item in choices
+    }
+    selected_ids = st.multiselect(
+        "Included funded instruments",
+        option_ids,
+        default=[key for key, value in preset.funded_weights.items() if value > 0.0],
+        format_func=lambda instrument_id: labels[instrument_id],
+        help="Remove an item to exclude it completely; add any instrument from the approved catalog.",
+        key=f"selected_instruments_{preset_key}",
+    )
+    editor_rows = []
+    for instrument_id in selected_ids:
+        item = by_id[instrument_id]
+        editor_rows.append(
+            {
+                "Symbol": instrument_id,
+                "Instrument": item.name,
+                "Asset class": item.asset_class,
+                "Type": "Stock" if item.instrument_type == "equity" else item.instrument_type.upper(),
+                "Weight %": 100.0 * float(preset.funded_weights.get(instrument_id, 0.02)),
+            }
+        )
+    editor_input = pd.DataFrame(
+        editor_rows,
+        columns=["Symbol", "Instrument", "Asset class", "Type", "Weight %"],
+    )
+    edited = st.data_editor(
+        editor_input,
+        hide_index=True,
+        width="stretch",
+        disabled=["Symbol", "Instrument", "Asset class", "Type"],
+        column_config={
+            "Symbol": st.column_config.TextColumn(width="small"),
+            "Instrument": st.column_config.TextColumn(width="large"),
+            "Asset class": st.column_config.TextColumn(width="medium"),
+            "Type": st.column_config.TextColumn(width="small"),
+            "Weight %": st.column_config.NumberColumn(
+                min_value=0.0,
+                max_value=100.0,
+                step=0.5,
+                format="%.2f%%",
+                help="Target funded weight as a percentage of portfolio NAV.",
+            ),
+        },
+        key=f"allocation_editor_{preset_key}",
+    )
+    overlay_default = 100.0 * float(preset.overlay_fractions.get("EURUSD_OVERLAY", 0.0))
+    overlay_percent = st.slider(
+        "EUR/USD overlay notional (% of NAV)",
+        min_value=-25.0,
+        max_value=25.0,
+        value=overlay_default,
+        step=1.0,
+        help="Zero-funded currency overlay. Negative values reverse the direction.",
+        key=f"fx_overlay_{preset_key}",
+    )
+
+    total_weight = float(edited["Weight %"].sum()) / 100.0 if not edited.empty else 0.0
+    residual_cash = 1.0 - total_weight
+    classes = edited.loc[edited["Weight %"] > 0.0, "Asset class"].nunique()
+    metrics = st.columns(4)
+    metrics[0].metric("Active instruments", f"{int((edited['Weight %'] > 0.0).sum()):,}")
+    metrics[1].metric("Asset classes", f"{classes:,}")
+    metrics[2].metric("Invested", _percent(total_weight))
+    metrics[3].metric("Residual cash", _percent(residual_cash))
+
+    valid = True
+    if edited.empty or total_weight <= 0.0:
+        st.error("Select at least one instrument and assign it a positive weight.")
+        valid = False
+    elif total_weight > 1.0 + 1e-10:
+        st.error(f"Target weights total {_percent(total_weight)}. Reduce them to 100% or less.")
+        valid = False
+    elif residual_cash < 0.01:
+        st.warning("Residual cash is below 1%; the portfolio has very little liquidity buffer.")
+    else:
+        st.success(
+            f"Funding identity is valid: {_percent(total_weight)} invested + "
+            f"{_percent(residual_cash)} cash = 100.00%."
+        )
+
+    left, right = st.columns([1.15, 0.85], gap="large")
+    with left:
+        st.markdown("### Apply linked calculation")
+        st.markdown(
+            "<div class='control-note'>Draft edits update the preview immediately. Risk results "
+            "change only when you click Apply, so Monte Carlo and rolling backtests are not rerun "
+            "after every keystroke.</div>",
+            unsafe_allow_html=True,
+        )
+        apply_clicked = st.button(
+            "Apply portfolio & recalculate all results",
+            type="primary",
+            disabled=not valid or (mode == "live" and not fred_key.strip()),
+            width="stretch",
+        )
+        reset_clicked = st.button("Reset to committed diversified demo", width="stretch")
+        if result.is_custom:
+            st.info(
+                f"Active results use a custom allocation. Current top risk driver: "
+                f"{result.headline.top_risk_driver}."
+            )
+    with right:
+        st.plotly_chart(
+            _allocation_preview(edited, max(residual_cash, 0.0)),
+            width="stretch",
+            key=f"allocation_preview_{preset_key}",
+        )
+
+    if apply_clicked:
+        weights = {
+            str(row["Symbol"]): float(row["Weight %"]) / 100.0
+            for _, row in edited.iterrows()
+            if float(row["Weight %"]) > 0.0
+        }
+        overlays = (
+            {"EURUSD_OVERLAY": overlay_percent / 100.0}
+            if abs(overlay_percent) > 1e-12
+            else {}
+        )
+        allocation = preset.with_weights(
+            weights,
+            overlays,
+            portfolio_name=f"Custom Multi-Asset Portfolio · {len(weights)} funded positions",
+        )
+        try:
+            with st.spinner("Recalculating every linked portfolio and risk layer…"):
+                st.session_state.analysis = platform.analyze_portfolio(
+                    allocation,
+                    data_mode=mode,
+                    fred_api_key=fred_key or None,
+                )
+                st.session_state.active_allocation = allocation
+            st.rerun()
+        except Exception as error:
+            st.error(f"Custom portfolio could not be calculated: {error}")
+    if reset_clicked:
+        st.session_state.analysis = _load_committed_analysis()
+        st.session_state.pop("active_allocation", None)
+        st.rerun()
+
+    with st.expander("Browse the complete approved instrument catalog"):
+        catalog_view = catalog.frame().copy()
+        catalog_view["instrument_type"] = catalog_view["instrument_type"].replace(
+            {"equity": "stock", "fx_forward": "FX overlay"}
+        )
+        st.dataframe(
+            catalog_view.rename(
+                columns={
+                    "instrument_id": "Symbol",
+                    "name": "Instrument",
+                    "instrument_type": "Type",
+                    "asset_class": "Asset class",
+                    "factor": "Risk factor",
+                    "provider_symbol": "Data symbol",
+                }
+            ),
+            hide_index=True,
+            width="stretch",
+        )
 
 
 def _render_overview(result: MarketRiskAnalysis, settings: ViewSettings) -> None:
@@ -911,14 +1149,16 @@ def _render_models(result: MarketRiskAnalysis, settings: ViewSettings) -> None:
     )
     st.subheader("Monte Carlo convergence")
     convergence = result.table("monte_carlo_convergence_summary").copy()
-    for column in ["var_50k_vs_100k_abs_pct", "es_50k_vs_100k_abs_pct"]:
+    for column in ["var_abs_difference_pct", "es_abs_difference_pct"]:
         convergence[column] = convergence[column].map(_percent)
     st.dataframe(
         convergence.rename(
             columns={
                 "seed": "Seed",
-                "var_50k_vs_100k_abs_pct": "VaR difference: 50k vs 100k",
-                "es_50k_vs_100k_abs_pct": "ES difference: 50k vs 100k",
+                "comparison_low_paths": "Lower path count",
+                "comparison_high_paths": "Higher path count",
+                "var_abs_difference_pct": "Absolute VaR difference",
+                "es_abs_difference_pct": "Absolute ES difference",
                 "var_target_below_2pct": "VaR difference below 2%",
             }
         ),
@@ -1127,15 +1367,24 @@ def _render_portfolio(result: MarketRiskAnalysis, settings: ViewSettings) -> Non
     latest_date = positions["portfolio_date"].max()
     latest = positions[positions["portfolio_date"] == latest_date].copy()
     st.subheader(f"Closing positions · {latest_date.date()}")
+    latest["target_allocation"] = latest.apply(
+        lambda row: (
+            f"{float(row['target_notional_fraction_of_nav']):.2%} notional"
+            if row["instrument_type"] == "fx_forward"
+            else f"{float(row['target_weight']):.2%}"
+        ),
+        axis=1,
+    )
     for column in ["end_market_value", "end_notional", "position_pnl"]:
         latest[column] = latest[column].map(lambda value: _money(value, settings.money_unit))
     st.dataframe(
         latest[
             [
                 "position_id",
+                "name",
                 "instrument_type",
                 "asset_class",
-                "factor",
+                "target_allocation",
                 "end_market_value",
                 "end_notional",
                 "position_pnl",
@@ -1143,9 +1392,10 @@ def _render_portfolio(result: MarketRiskAnalysis, settings: ViewSettings) -> Non
         ].rename(
             columns={
                 "position_id": "Position",
+                "name": "Instrument name",
                 "instrument_type": "Instrument",
                 "asset_class": "Asset class",
-                "factor": "Risk factor",
+                "target_allocation": "Target",
                 "end_market_value": "Market value",
                 "end_notional": "Notional",
                 "position_pnl": "Daily P&L",
@@ -1166,14 +1416,14 @@ def _render_downloads(result: MarketRiskAnalysis) -> None:
     left.download_button(
         "Download report",
         data=result.report_text,
-        file_name=result.artifacts.report.name,
+        file_name=result.report_filename,
         mime="text/markdown",
         width="stretch",
     )
     middle.download_button(
         "Download one-page summary",
         data=result.summary_text,
-        file_name=result.artifacts.summary.name,
+        file_name=result.summary_filename,
         mime="text/markdown",
         width="stretch",
     )
@@ -1200,8 +1450,14 @@ def _render_downloads(result: MarketRiskAnalysis) -> None:
     )
     st.subheader("Verification gates")
     st.dataframe(gates, hide_index=True, width="stretch")
-    selected = st.selectbox("Inspect generated figure", sorted(result.figures))
-    st.image(str(result.figures[selected]), width="stretch")
+    if result.figures:
+        selected = st.selectbox("Inspect generated figure", sorted(result.figures))
+        st.image(str(result.figures[selected]), width="stretch")
+    else:
+        st.info(
+            "This custom analysis is calculated in memory. Its complete live tables and "
+            "portfolio definition are included in the ZIP download."
+        )
 
 
 def main() -> None:
@@ -1213,6 +1469,7 @@ def main() -> None:
     _risk_tape(result, settings)
     tabs = st.tabs(
         [
+            "Portfolio builder",
             "Overview",
             "Risk models",
             "Backtesting",
@@ -1223,18 +1480,20 @@ def main() -> None:
         ]
     )
     with tabs[0]:
-        _render_overview(result, settings)
+        _render_portfolio_builder(result, mode, fred_key)
     with tabs[1]:
-        _render_models(result, settings)
+        _render_overview(result, settings)
     with tabs[2]:
-        _render_backtesting(result, settings)
+        _render_models(result, settings)
     with tabs[3]:
-        _render_stress(result, settings)
+        _render_backtesting(result, settings)
     with tabs[4]:
-        _render_contributions(result, settings)
+        _render_stress(result, settings)
     with tabs[5]:
-        _render_portfolio(result, settings)
+        _render_contributions(result, settings)
     with tabs[6]:
+        _render_portfolio(result, settings)
+    with tabs[7]:
         _render_downloads(result)
 
 

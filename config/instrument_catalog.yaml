@@ -1,0 +1,167 @@
+catalog_version: 1.1.0
+base_currency: USD
+instruments:
+  - instrument_id: SPY
+    name: SPDR S&P 500 ETF Trust
+    instrument_type: etf
+    asset_class: US Equity
+    factor: SPY_RETURN
+    provider_symbol: SPY
+  - instrument_id: QQQ
+    name: Invesco QQQ Trust
+    instrument_type: etf
+    asset_class: US Equity
+    factor: QQQ_RETURN
+    provider_symbol: QQQ
+  - instrument_id: IWM
+    name: iShares Russell 2000 ETF
+    instrument_type: etf
+    asset_class: US Equity
+    factor: IWM_RETURN
+    provider_symbol: IWM
+  - instrument_id: EFA
+    name: iShares MSCI EAFE ETF
+    instrument_type: etf
+    asset_class: International Equity
+    factor: EFA_RETURN
+    provider_symbol: EFA
+  - instrument_id: EEM
+    name: iShares MSCI Emerging Markets ETF
+    instrument_type: etf
+    asset_class: Emerging Markets Equity
+    factor: EEM_RETURN
+    provider_symbol: EEM
+  - instrument_id: VNQ
+    name: Vanguard Real Estate ETF
+    instrument_type: etf
+    asset_class: Real Estate
+    factor: VNQ_RETURN
+    provider_symbol: VNQ
+  - instrument_id: AAPL
+    name: Apple Inc.
+    instrument_type: equity
+    asset_class: US Equity
+    factor: AAPL_RETURN
+    provider_symbol: AAPL
+  - instrument_id: MSFT
+    name: Microsoft Corporation
+    instrument_type: equity
+    asset_class: US Equity
+    factor: MSFT_RETURN
+    provider_symbol: MSFT
+  - instrument_id: NVDA
+    name: NVIDIA Corporation
+    instrument_type: equity
+    asset_class: US Equity
+    factor: NVDA_RETURN
+    provider_symbol: NVDA
+  - instrument_id: JPM
+    name: JPMorgan Chase & Co.
+    instrument_type: equity
+    asset_class: US Equity
+    factor: JPM_RETURN
+    provider_symbol: JPM
+  - instrument_id: JNJ
+    name: Johnson & Johnson
+    instrument_type: equity
+    asset_class: US Equity
+    factor: JNJ_RETURN
+    provider_symbol: JNJ
+  - instrument_id: XOM
+    name: Exxon Mobil Corporation
+    instrument_type: equity
+    asset_class: US Equity
+    factor: XOM_RETURN
+    provider_symbol: XOM
+  - instrument_id: LQD
+    name: iShares iBoxx Investment Grade Corporate Bond ETF
+    instrument_type: etf
+    asset_class: Investment Grade Credit
+    factor: LQD_RETURN
+    provider_symbol: LQD
+  - instrument_id: HYG
+    name: iShares iBoxx High Yield Corporate Bond ETF
+    instrument_type: etf
+    asset_class: High Yield Credit
+    factor: HYG_RETURN
+    provider_symbol: HYG
+  - instrument_id: TIP
+    name: iShares TIPS Bond ETF
+    instrument_type: etf
+    asset_class: Inflation-Linked Bonds
+    factor: TIP_RETURN
+    provider_symbol: TIP
+  - instrument_id: US2Y
+    name: US 2Y Synthetic Constant-Sensitivity Bond
+    instrument_type: bond
+    asset_class: Government Bonds
+    factor: DGS2_CHANGE
+    provider_symbol: DGS2
+    modified_duration: 1.9
+    convexity: 4.0
+  - instrument_id: US5Y
+    name: US 5Y Synthetic Constant-Sensitivity Bond
+    instrument_type: bond
+    asset_class: Government Bonds
+    factor: DGS5_CHANGE
+    provider_symbol: DGS5
+    modified_duration: 4.5
+    convexity: 22.0
+  - instrument_id: US10Y
+    name: US 10Y Synthetic Constant-Sensitivity Bond
+    instrument_type: bond
+    asset_class: Government Bonds
+    factor: DGS10_CHANGE
+    provider_symbol: DGS10
+    modified_duration: 8.0
+    convexity: 70.0
+  - instrument_id: US30Y
+    name: US 30Y Synthetic Constant-Sensitivity Bond
+    instrument_type: bond
+    asset_class: Government Bonds
+    factor: DGS30_CHANGE
+    provider_symbol: DGS30
+    modified_duration: 17.0
+    convexity: 310.0
+  - instrument_id: GLD
+    name: SPDR Gold Shares
+    instrument_type: etf
+    asset_class: Precious Metals
+    factor: GLD_RETURN
+    provider_symbol: GLD
+  - instrument_id: SLV
+    name: iShares Silver Trust
+    instrument_type: etf
+    asset_class: Precious Metals
+    factor: SLV_RETURN
+    provider_symbol: SLV
+  - instrument_id: PPLT
+    name: abrdn Physical Platinum Shares ETF
+    instrument_type: etf
+    asset_class: Precious Metals
+    factor: PPLT_RETURN
+    provider_symbol: PPLT
+  - instrument_id: DBC
+    name: Invesco DB Commodity Index Tracking Fund
+    instrument_type: etf
+    asset_class: Commodities
+    factor: DBC_RETURN
+    provider_symbol: DBC
+  - instrument_id: USO
+    name: United States Oil Fund
+    instrument_type: etf
+    asset_class: Commodities
+    factor: USO_RETURN
+    provider_symbol: USO
+  - instrument_id: USD_CASH
+    name: USD Cash
+    instrument_type: cash
+    asset_class: Cash
+    factor: CASH_RETURN
+  - instrument_id: EURUSD_OVERLAY
+    name: Long EUR / Short USD Overlay
+    instrument_type: fx_forward
+    asset_class: FX
+    factor: EURUSD_RETURN
+    provider_symbol: EURUSD=X
+    quote_convention: USD_per_EUR

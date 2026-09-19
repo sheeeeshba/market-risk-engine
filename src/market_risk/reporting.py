@@ -152,16 +152,25 @@ def create_core_figures(
     # 7. Worst scenario loss waterfall.
     worst_scenario = str(stress_summary["scenario_loss"].idxmax())
     losses = stress_detail.xs(worst_scenario)["position_loss"].sort_values(ascending=False)
+    maximum_named_positions = 11
+    if len(losses) > maximum_named_positions + 1:
+        named = losses.iloc[:maximum_named_positions]
+        losses = pd.concat(
+            [named, pd.Series({"Other positions": float(losses.iloc[maximum_named_positions:].sum())})]
+        )
     cumulative = losses.cumsum().shift(fill_value=0.0)
     figure, axis = plt.subplots(figsize=(12, 6))
     axis.bar(losses.index, losses, bottom=cumulative, color=[COLORS[1] if x >= 0 else COLORS[2] for x in losses])
     axis.plot(losses.index, losses.cumsum(), color="#333333", marker="o", linewidth=1.2)
     axis.set(
-        title=f"Stress-Loss Waterfall: {stress_summary.loc[worst_scenario, 'scenario_name']}",
+        title=(
+            f"Stress-Loss Waterfall: {stress_summary.loc[worst_scenario, 'scenario_name']}\n"
+            "Largest position losses shown separately; remaining positions aggregated"
+        ),
         xlabel="Position",
         ylabel="Cumulative USD loss",
     )
-    axis.tick_params(axis="x", rotation=30)
+    axis.tick_params(axis="x", rotation=25)
     path = destination / "07_stress_loss_waterfall.png"
     _finish_figure(figure, path, note)
     paths["stress_waterfall"] = str(path)

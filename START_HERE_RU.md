@@ -29,6 +29,7 @@ python -m streamlit run streamlit_app.py
 
 В sidebar оставьте `Data source` = `Demo snapshot`. Приложение сразу загрузит готовый воспроизводимый анализ без API-ключей.
 
+- **Portfolio builder** — выберите preset, добавьте или удалите акции, ETF, облигации, металлы и сырьё, задайте веса и нажмите `Apply portfolio & recalculate all results`. Остаток до 100% автоматически станет USD cash.
 - **Overview** — NAV, диапазоны VaR/ES и главный риск-драйвер.
 - **Risk models** — сравнение Historical, Parametric Normal и Monte Carlo; можно переключить столбцы на confidence curve.
 - **Backtesting** — rolling forecasts, исключения и тесты Купика/Кристофферсена.
@@ -46,7 +47,16 @@ python -m streamlit run streamlit_app.py
 - представление риска: USD loss или `% of NAV`;
 - количество крупнейших risk drivers.
 
-Эти настройки меняют только представление уже рассчитанных данных. Кнопка `Run risk analysis` запускает сам pipeline заново.
+Эти настройки меняют только представление уже рассчитанных данных. Настройки в **Portfolio builder** меняют сам портфель: после `Apply` одновременно пересчитываются NAV/P&L, VaR/ES, backtesting, stress tests и risk contributions. Кнопка `Run risk analysis` повторно запускает текущий активный портфель.
+
+### Как собрать свой портфель
+
+1. Откройте вкладку **Portfolio builder** и выберите один из четырёх стартовых presets.
+2. В поле **Included funded instruments** удалите ненужные позиции или добавьте новые из каталога 26 инструментов.
+3. В таблице измените `Weight %`. Сумма инвестированной части не должна превышать 100%; остаток cash рассчитывается автоматически.
+4. При необходимости настройте EUR/USD overlay. Он считается отдельно от funded weights.
+5. Проверьте круговую диаграмму и нажмите **Apply portfolio & recalculate all results**.
+6. Откройте остальные вкладки: все числа и графики уже относятся к новому портфелю. В **Evidence & downloads** можно скачать отдельный ZIP с его конфигурацией и таблицами.
 
 Demo использует синтетические факторы. Его цифры подтверждают работу кода, но не являются исторической доходностью или результатом реального портфеля.
 
@@ -64,7 +74,7 @@ python -m ruff check .
 market-risk app
 ```
 
-Ожидаемый результат версии 1.0: `28 passed`, включая тесты dashboard, view controls, download layer и блокировку Live mode без ключа.
+Ожидаемый результат версии 1.1: `34 passed`, включая тесты конструктора портфеля, связанного пересчёта, dashboard, download layer и блокировку Live mode без ключа.
 
 ## Live data
 

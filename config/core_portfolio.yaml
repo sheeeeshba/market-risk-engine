@@ -1,69 +1,100 @@
-portfolio_name: Canonical Multi-Asset Demonstration Portfolio
+portfolio_name: Diversified Multi-Asset Demonstration Portfolio
 base_currency: USD
 initial_nav: 10000000.0
 rebalance_frequency: monthly
-fx_overlay_target_fraction_of_nav: 0.075
-positions:
-  - position_id: SPY
-    name: SPY Synthetic Total-Return ETF
-    instrument_type: etf
-    asset_class: US Equity
-    factor: SPY_RETURN
-    initial_market_value: 2000000.0
-    target_weight: 0.20
-  - position_id: QQQ
-    name: QQQ Synthetic Total-Return ETF
-    instrument_type: etf
-    asset_class: US Equity
-    factor: QQQ_RETURN
-    initial_market_value: 1000000.0
-    target_weight: 0.10
-  - position_id: EFA
-    name: EFA Synthetic Total-Return ETF
-    instrument_type: etf
-    asset_class: International Equity
-    factor: EFA_RETURN
-    initial_market_value: 1000000.0
-    target_weight: 0.10
-  - position_id: GLD
-    name: GLD Synthetic Total-Return ETF
-    instrument_type: etf
-    asset_class: Commodity
-    factor: GLD_RETURN
-    initial_market_value: 500000.0
-    target_weight: 0.05
-  - position_id: US5Y
-    name: US 5Y Synthetic Constant-Sensitivity Bond
-    instrument_type: bond
-    asset_class: Rates
-    factor: DGS5_CHANGE
-    initial_market_value: 1500000.0
-    target_weight: 0.15
-    modified_duration: 4.5
-    convexity: 22.0
-  - position_id: US10Y
-    name: US 10Y Synthetic Constant-Sensitivity Bond
-    instrument_type: bond
-    asset_class: Rates
-    factor: DGS10_CHANGE
-    initial_market_value: 1500000.0
-    target_weight: 0.15
-    modified_duration: 8.0
-    convexity: 70.0
-  - position_id: USD_CASH
-    name: USD Cash
-    instrument_type: cash
-    asset_class: Cash
-    factor: CASH_RETURN
-    initial_market_value: 2500000.0
-    target_weight: 0.25
-  - position_id: EURUSD_OVERLAY
-    name: Long EUR / Short USD Overlay
-    instrument_type: fx_forward
-    asset_class: FX
-    factor: EURUSD_RETURN
-    initial_market_value: 0.0
-    initial_notional: 750000.0
-    target_notional_fraction_of_nav: 0.075
-    quote_convention: USD_per_EUR
-
+residual_cash_instrument: USD_CASH
+default_preset: diversified
+presets:
+  diversified:
+    name: Diversified Core
+    description: Broad equity, government and credit bond, precious-metal, commodity, real-estate, and cash exposure.
+    funded_weights:
+      SPY: 0.10
+      QQQ: 0.05
+      IWM: 0.04
+      EFA: 0.07
+      EEM: 0.04
+      VNQ: 0.03
+      AAPL: 0.02
+      MSFT: 0.02
+      JPM: 0.02
+      JNJ: 0.02
+      XOM: 0.02
+      LQD: 0.06
+      HYG: 0.04
+      TIP: 0.05
+      US2Y: 0.05
+      US5Y: 0.06
+      US10Y: 0.06
+      US30Y: 0.03
+      GLD: 0.06
+      SLV: 0.02
+      PPLT: 0.01
+      DBC: 0.04
+      USO: 0.02
+    overlay_fractions:
+      EURUSD_OVERLAY: 0.05
+  growth:
+    name: Growth Tilt
+    description: Higher equity and technology concentration with a smaller defensive allocation.
+    funded_weights:
+      SPY: 0.15
+      QQQ: 0.14
+      IWM: 0.07
+      EFA: 0.08
+      EEM: 0.06
+      VNQ: 0.03
+      AAPL: 0.06
+      MSFT: 0.06
+      NVDA: 0.05
+      JPM: 0.03
+      JNJ: 0.02
+      XOM: 0.03
+      HYG: 0.05
+      LQD: 0.03
+      US5Y: 0.03
+      GLD: 0.04
+    overlay_fractions:
+      EURUSD_OVERLAY: 0.05
+  defensive:
+    name: Defensive Income
+    description: Government bonds, investment-grade credit, inflation protection, gold, and defensive equities.
+    funded_weights:
+      SPY: 0.08
+      EFA: 0.05
+      VNQ: 0.02
+      JNJ: 0.04
+      XOM: 0.02
+      LQD: 0.12
+      HYG: 0.03
+      TIP: 0.10
+      US2Y: 0.15
+      US5Y: 0.12
+      US10Y: 0.10
+      US30Y: 0.05
+      GLD: 0.06
+      DBC: 0.02
+    overlay_fractions:
+      EURUSD_OVERLAY: 0.02
+  inflation_aware:
+    name: Inflation Aware
+    description: TIPS, real estate, energy, broad commodities, and precious metals alongside global equities.
+    funded_weights:
+      SPY: 0.08
+      IWM: 0.04
+      EFA: 0.06
+      EEM: 0.05
+      VNQ: 0.07
+      XOM: 0.05
+      TIP: 0.20
+      LQD: 0.05
+      HYG: 0.03
+      US2Y: 0.05
+      US5Y: 0.04
+      GLD: 0.10
+      SLV: 0.04
+      PPLT: 0.02
+      DBC: 0.07
+      USO: 0.03
+    overlay_fractions:
+      EURUSD_OVERLAY: 0.03

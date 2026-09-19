@@ -8,7 +8,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-SUPPORTED_INSTRUMENTS = {"etf", "bond", "cash", "fx_forward"}
+SUPPORTED_INSTRUMENTS = {"equity", "etf", "bond", "cash", "fx_forward"}
 
 
 def validate_portfolio_config(config: Mapping[str, Any]) -> dict[str, float]:

@@ -13,13 +13,14 @@ def test_demo_dashboard_renders_complete_risk_workspace() -> None:
     assert not app.exception
     assert len(app.metric) >= 5
     metric_values = {item.label: item.value for item in app.metric}
-    assert metric_values["Portfolio NAV"] == "$9.12m"
-    assert metric_values["99.0% VaR range"] == "$90.2k to 91.7k"
-    assert metric_values["99.0% ES range"] == "$104.4k to 117.9k"
+    assert metric_values["Portfolio NAV"] == "$9.06m"
+    assert metric_values["99.0% VaR range"] == "$89.3k to 93.9k"
+    assert metric_values["99.0% ES range"] == "$101.9k to 104.8k"
     assert "Data source" in {item.label for item in app.selectbox}
     assert "FRED API key" in {item.label for item in app.text_input}
     assert "Run risk analysis" in {item.label for item in app.button}
     assert {
+        "Portfolio builder",
         "Overview",
         "Risk models",
         "Backtesting",
@@ -42,11 +43,19 @@ def test_dashboard_view_controls_update_without_recalculating() -> None:
     basis.set_value("% of NAV").run(timeout=120)
     model_chart = next(item for item in app.radio if item.label == "Model chart")
     model_chart.set_value("Confidence curve").run(timeout=120)
+    instruments = next(
+        item for item in app.multiselect if item.label == "Included funded instruments"
+    )
+    instruments.set_value([*instruments.value, "NVDA"]).run(timeout=120)
 
     assert not app.exception
     assert confidence.value == 0.975
     assert money.value == "USD millions"
     assert basis.value == "% of NAV"
+    draft_metrics = {item.label: item.value for item in app.metric}
+    assert draft_metrics["Active instruments"] == "24"
+    assert draft_metrics["Invested"] == "95.00%"
+    assert draft_metrics["Residual cash"] == "5.00%"
 
 
 def test_live_mode_is_gated_before_data_download() -> None:

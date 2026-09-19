@@ -7,13 +7,14 @@ All amounts are USD unless explicitly stated. Positive P&L is profit; positive l
 | Field | Unit | Definition |
 |---|---|---|
 | `portfolio_date` | date | Valid common portfolio valuation date. |
-| `SPY_RETURN` | decimal return | Adjusted simple return for the synthetic SPY total-return holding. |
-| `QQQ_RETURN` | decimal return | Adjusted simple return for the synthetic QQQ total-return holding. |
-| `EFA_RETURN` | decimal return | Adjusted simple return for the USD-listed EFA factor; no second FX shock is applied. |
-| `GLD_RETURN` | decimal return | Adjusted simple return for the synthetic GLD total-return holding. |
-| `DGS5_CHANGE` | decimal yield change | Absolute change in the 5Y Treasury yield; `0.01` is 100 bp. |
-| `DGS10_CHANGE` | decimal yield change | Absolute change in the 10Y Treasury yield; `0.01` is 100 bp. |
+| `SPY_RETURN` … `XOM_RETURN` | decimal return | Adjusted simple returns for six equity/real-estate ETFs and six individual US stocks. |
+| `LQD_RETURN`, `HYG_RETURN`, `TIP_RETURN` | decimal return | Adjusted simple returns for investment-grade credit, high-yield credit, and inflation-linked bond ETFs. |
+| `GLD_RETURN`, `SLV_RETURN`, `PPLT_RETURN` | decimal return | Adjusted simple returns for gold, silver, and platinum instruments. |
+| `DBC_RETURN`, `USO_RETURN` | decimal return | Adjusted simple returns for broad commodities and oil. |
+| `DGS2_CHANGE`, `DGS5_CHANGE`, `DGS10_CHANGE`, `DGS30_CHANGE` | decimal yield change | Absolute Treasury yield changes by tenor; `0.01` is 100 bp. |
 | `EURUSD_RETURN` | decimal return | Simple return of USD per EUR; positive means EUR strengthens. |
+
+The canonical ordered list is exported as `market_risk.data_pipeline.FACTOR_COLUMNS`; `config/instrument_catalog.yaml` maps every non-cash instrument to exactly one factor.
 
 ## Position State
 
@@ -25,6 +26,15 @@ All amounts are USD unless explicitly stated. Positive P&L is profit; positive l
 | `convexity` | per decimal-yield squared | Second-order bond price sensitivity. |
 | `target_weight` | fraction of NAV | Recurring funded target weight. |
 | `holdings_version` | integer | Increments after each monthly close rebalance. |
+
+## Portfolio Allocation Input
+
+| Field | Unit | Definition |
+|---|---|---|
+| `funded_weights` | fraction of NAV | User-selected non-cash target weights; each must be non-negative and their sum cannot exceed 1.0. |
+| `residual_cash_weight` | fraction of NAV | Automatically calculated as `1.0 - sum(funded_weights)`. |
+| `overlay_fractions` | fraction of NAV notional | Signed zero-funded FX overlay targets, reported separately from the funding identity. |
+| `preset_key` | identifier | Optional named starting allocation; becomes null after custom editing. |
 
 ## Daily Portfolio Output
 
@@ -49,4 +59,3 @@ All amounts are USD unless explicitly stated. Positive P&L is profit; positive l
 | `breach_magnitude` | USD | `max(realized_loss - VaR, 0)`. |
 | `component_var` | USD loss | Additive Euler contribution to Parametric VaR; may be negative. |
 | `historical_es_contribution` | USD loss | Position loss averaged with exact portfolio-tail scenario weights. |
-

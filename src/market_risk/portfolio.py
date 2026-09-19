@@ -77,7 +77,7 @@ def run_portfolio_history(
         pnl_by_position: dict[str, float] = {}
         for position_id, position in start.iterrows():
             instrument = position["instrument_type"]
-            if instrument == "etf":
+            if instrument in {"equity", "etf"}:
                 pnl = etf_pnl(position["market_value"], shocks[position["factor"]])
             elif instrument == "bond":
                 pnl = bond_pnl(
@@ -96,7 +96,7 @@ def run_portfolio_history(
 
         pretrade = start.copy()
         for position_id, position in start.iterrows():
-            if position["instrument_type"] in {"etf", "bond"}:
+            if position["instrument_type"] in {"equity", "etf", "bond"}:
                 pretrade.loc[position_id, "market_value"] += pnl_by_position[position_id]
         cash_ids = start.index[start["instrument_type"] == "cash"].tolist()
         if len(cash_ids) != 1:
@@ -142,9 +142,14 @@ def run_portfolio_history(
                 {
                     "portfolio_date": date,
                     "position_id": position_id,
+                    "name": start.loc[position_id, "name"],
                     "instrument_type": start.loc[position_id, "instrument_type"],
                     "asset_class": start.loc[position_id, "asset_class"],
                     "factor": start.loc[position_id, "factor"],
+                    "target_weight": start.loc[position_id, "target_weight"],
+                    "target_notional_fraction_of_nav": start.loc[
+                        position_id, "target_notional_fraction_of_nav"
+                    ],
                     "start_market_value": float(start.loc[position_id, "market_value"]),
                     "start_notional": float(start.loc[position_id, "notional"]),
                     "position_pnl": pnl_by_position[position_id],
@@ -190,4 +195,3 @@ def position_snapshot_on(history: PortfolioHistory, date: pd.Timestamp) -> pd.Da
     rows = history.positions.xs(pd.Timestamp(date)).copy()
     snapshot = rows[["instrument_type", "asset_class", "factor", "end_market_value", "end_notional", "modified_duration", "convexity", "holdings_version"]]
     return snapshot.rename(columns={"end_market_value": "market_value", "end_notional": "notional"})
-

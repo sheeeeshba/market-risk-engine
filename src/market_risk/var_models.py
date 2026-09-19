@@ -186,7 +186,7 @@ def factor_exposure_by_position(
     exposures = pd.DataFrame(0.0, index=snapshot.index, columns=factor_order)
     for position_id, position in snapshot.iterrows():
         factor = position["factor"]
-        if position["instrument_type"] == "etf":
+        if position["instrument_type"] in {"equity", "etf"}:
             exposures.loc[position_id, factor] = float(position["market_value"])
         elif position["instrument_type"] == "bond":
             exposures.loc[position_id, factor] = -float(position["market_value"]) * float(
@@ -213,7 +213,7 @@ def revalue_factor_shocks(snapshot: pd.DataFrame, factor_shocks: pd.DataFrame) -
         if factor not in factor_shocks:
             raise ValueError(f"Scenario shocks do not contain mapped factor {factor!r}.")
         shocks = factor_shocks[factor].to_numpy(dtype=float)
-        if instrument == "etf":
+        if instrument in {"equity", "etf"}:
             pnl = float(position["market_value"]) * shocks
         elif instrument == "bond":
             pnl = bond_pnl(

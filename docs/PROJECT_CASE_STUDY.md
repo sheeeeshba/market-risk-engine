@@ -8,11 +8,11 @@ Translate a transparent multi-asset portfolio into explainable P&L, current VaR/
 
 ## Portfolio and Data
 
-The Core portfolio contains four synthetic total-return ETF holdings, two synthetic duration-convexity Treasury positions, USD cash, and a separately accounted long-EUR overlay. Seven risk factors feed a common validated calendar. The bundled 520-row series is deterministic and artificial.
+The approved universe contains 26 instruments: broad equity ETFs, individual stocks, credit and inflation-linked ETFs, four synthetic duration-convexity Treasury tenors, precious metals, commodities, USD cash, and a separately accounted EUR/USD overlay. Twenty-five risk factors feed a common validated calendar. The bundled 520-row series is deterministic and artificial.
 
 ## Approach
 
-The implementation separates data alignment, portfolio accounting, risk models, backtesting, contributions, stresses, and reporting behind testable interfaces. A typed platform layer validates artifacts before exposing them to the responsive Risk Ledger UI. Every forecast uses only information available through its forecast date. Random seeds, configuration and factor hashes, runtime versions, and outputs are recorded.
+The implementation separates the instrument catalog, user allocation, data alignment, portfolio accounting, risk models, backtesting, contributions, stresses, and reporting behind testable interfaces. A single resolved allocation drives every downstream calculation, preventing charts and headline results from drifting apart. A typed platform layer exposes both committed and in-memory custom analysis to the responsive Risk Ledger UI.
 
 ## Strongest Demonstration Chart
 
@@ -23,11 +23,11 @@ The implementation separates data alignment, portfolio accounting, risk models, 
 - Implemented Historical, Parametric Normal, and full-revaluation Monte Carlo VaR/ES at three confidence levels.
 - Generated 270 aligned forecasts per model from the 520-row artificial snapshot and applied Kupiec/Christoffersen diagnostics with low-power warnings.
 - Reconciled six hypothetical scenarios and additive position/factor contributions; generated eight figures and a versioned report.
-- Delivered seven task-oriented UI tabs, configurable Plotly views, consistent USD/%NAV formatting, and a complete downloadable evidence bundle.
+- Delivered eight task-oriented UI tabs, a linked add/remove/reweight portfolio builder, configurable Plotly views, consistent USD/%NAV formatting, and complete downloadable evidence bundles.
 
 ## Validation
 
-Twenty-eight automated tests cover signs, units, data gaps, accounting, exact tail weights, covariance and seed behaviour, backtest edge cases, scenario reconciliation, platform validation, Streamlit interactions, live-mode gating, and an end-to-end small run. Desktop and mobile browser checks also verify chart changes, readable labels, and error-free rendering. The verification manifest identifies commands, hashes, timestamps, input snapshot, exit status, and verified artifacts.
+Thirty-four automated tests cover catalog/allocation controls, linked recalculation, signs, units, data gaps, accounting, exact tail weights, covariance and seed behaviour, backtest edge cases, scenario reconciliation, platform validation, Streamlit interactions, live-mode gating, and an end-to-end small run. The verification manifest identifies commands, hashes, timestamps, input snapshot, exit status, and verified artifacts.
 
 ## Key Limitation
 

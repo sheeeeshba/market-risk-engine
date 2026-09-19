@@ -14,16 +14,36 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+RETURN_LEVEL_MAP = {
+    "SPY": "SPY",
+    "QQQ": "QQQ",
+    "IWM": "IWM",
+    "EFA": "EFA",
+    "EEM": "EEM",
+    "VNQ": "VNQ",
+    "AAPL": "AAPL",
+    "MSFT": "MSFT",
+    "NVDA": "NVDA",
+    "JPM": "JPM",
+    "JNJ": "JNJ",
+    "XOM": "XOM",
+    "LQD": "LQD",
+    "HYG": "HYG",
+    "TIP": "TIP",
+    "GLD": "GLD",
+    "SLV": "SLV",
+    "PPLT": "PPLT",
+    "DBC": "DBC",
+    "USO": "USO",
+    "EURUSD": "EURUSD=X",
+}
+RATE_LEVELS = ("DGS2", "DGS5", "DGS10", "DGS30")
 FACTOR_COLUMNS = [
-    "SPY_RETURN",
-    "QQQ_RETURN",
-    "EFA_RETURN",
-    "GLD_RETURN",
-    "DGS5_CHANGE",
-    "DGS10_CHANGE",
+    *(f"{name}_RETURN" for name in RETURN_LEVEL_MAP if name != "EURUSD"),
+    *(f"{name}_CHANGE" for name in RATE_LEVELS),
     "EURUSD_RETURN",
 ]
-LEVEL_COLUMNS = ["SPY", "QQQ", "EFA", "GLD", "DGS5", "DGS10", "EURUSD"]
+LEVEL_COLUMNS = [*RETURN_LEVEL_MAP, *RATE_LEVELS]
 SYNTHETIC_WATERMARK = "SYNTHETIC DATA — NOT FOR RESUME RESULTS"
 
 
@@ -47,28 +67,77 @@ def generate_synthetic_demo(
         raise ValueError("Synthetic demo requires at least two factor observations.")
     rng = np.random.default_rng(seed)
 
-    # Independent latent shocks: global risk, US growth, rates, gold, and FX.
-    latent = rng.standard_normal((periods, 5))
+    # Independent latent shocks: global risk, technology, small caps, international
+    # equities, rates, credit, inflation/real assets, precious metals, oil, and FX.
+    latent = rng.standard_normal((periods, 10))
     regime_scale = np.where(rng.random(periods) < 0.04, 2.75, 1.0)
     latent *= regime_scale[:, None]
-    idiosyncratic = rng.standard_normal((periods, 7))
+    idiosyncratic = rng.standard_normal((periods, len(FACTOR_COLUMNS)))
 
-    # Daily factor loadings give returns in decimal and rates in decimal-yield units.
-    loadings = np.array(
-        [
-            [0.0085, 0.0015, -0.0003, 0.0000, 0.0000],  # SPY
-            [0.0090, 0.0060, -0.0004, 0.0000, 0.0000],  # QQQ
-            [0.0070, -0.0005, -0.0002, 0.0000, 0.0030],  # EFA
-            [-0.0010, 0.0000, -0.0007, 0.0070, -0.0005],  # GLD
-            [-0.00003, 0.0000, 0.00035, 0.0000, 0.0000],  # DGS5
-            [-0.00004, 0.0000, 0.00042, 0.0000, 0.0000],  # DGS10
-            [0.0010, -0.0005, -0.0002, 0.0000, 0.0045],  # EURUSD
-        ]
-    )
-    idio_vol = np.array([0.0040, 0.0045, 0.0045, 0.0050, 0.00018, 0.00020, 0.0025])
+    # Daily loadings produce decimal returns and decimal-yield changes.  The fixture
+    # is designed for diversified engineering tests, not historical calibration.
+    loading_rows = {
+        "SPY_RETURN": [0.0080, 0.0015, 0.0010, 0.0005, -0.0004, 0.0005, 0.0003, 0.0, 0.0, 0.0],
+        "QQQ_RETURN": [0.0075, 0.0060, 0.0003, 0.0003, -0.0007, 0.0003, 0.0, 0.0, 0.0, 0.0],
+        "IWM_RETURN": [0.0080, 0.0005, 0.0055, 0.0005, -0.0008, 0.0015, 0.0005, 0.0, 0.0, 0.0],
+        "EFA_RETURN": [0.0060, 0.0, 0.0005, 0.0050, -0.0003, 0.0005, 0.0004, 0.0, 0.0, 0.0020],
+        "EEM_RETURN": [0.0065, 0.0, 0.0010, 0.0065, -0.0005, 0.0010, 0.0015, 0.0, 0.0, 0.0025],
+        "VNQ_RETURN": [0.0050, 0.0, 0.0010, 0.0005, -0.0025, 0.0010, 0.0025, 0.0, 0.0, 0.0],
+        "AAPL_RETURN": [0.0070, 0.0065, 0.0, 0.0, -0.0005, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "MSFT_RETURN": [0.0068, 0.0058, 0.0, 0.0, -0.0004, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "NVDA_RETURN": [0.0080, 0.0100, 0.0, 0.0, -0.0007, 0.0, 0.0, 0.0, 0.0, 0.0],
+        "JPM_RETURN": [0.0075, -0.0005, 0.0015, 0.0, 0.0015, 0.0020, 0.0, 0.0, 0.0, 0.0],
+        "JNJ_RETURN": [0.0045, -0.0010, -0.0005, 0.0, -0.0002, -0.0003, 0.0, 0.0, 0.0, 0.0],
+        "XOM_RETURN": [0.0055, -0.0005, 0.0005, 0.0, 0.0003, 0.0005, 0.0025, 0.0, 0.0045, 0.0],
+        "LQD_RETURN": [0.0010, 0.0, 0.0, 0.0, -0.0032, 0.0020, 0.0002, 0.0, 0.0, 0.0],
+        "HYG_RETURN": [0.0040, 0.0, 0.0008, 0.0, -0.0012, 0.0040, 0.0005, 0.0, 0.0, 0.0],
+        "TIP_RETURN": [0.0010, 0.0, 0.0, 0.0, -0.0022, 0.0005, 0.0035, 0.0, 0.0, 0.0],
+        "GLD_RETURN": [-0.0008, 0.0, 0.0, 0.0, -0.0010, 0.0, 0.0010, 0.0065, 0.0, 0.0010],
+        "SLV_RETURN": [0.0010, 0.0, 0.0005, 0.0, -0.0010, 0.0, 0.0015, 0.0085, 0.0, 0.0010],
+        "PPLT_RETURN": [0.0020, 0.0, 0.0005, 0.0010, -0.0007, 0.0, 0.0020, 0.0070, 0.0010, 0.0005],
+        "DBC_RETURN": [0.0010, 0.0, 0.0005, 0.0010, 0.0003, 0.0, 0.0050, 0.0010, 0.0040, 0.0],
+        "USO_RETURN": [0.0020, 0.0, 0.0010, 0.0005, 0.0003, 0.0, 0.0025, 0.0, 0.0110, 0.0],
+        "DGS2_CHANGE": [-0.00003, 0.0, 0.0, 0.0, 0.00030, -0.00002, 0.00008, 0.0, 0.0, 0.0],
+        "DGS5_CHANGE": [-0.00004, 0.0, 0.0, 0.0, 0.00036, -0.00002, 0.00009, 0.0, 0.0, 0.0],
+        "DGS10_CHANGE": [-0.00004, 0.0, 0.0, 0.0, 0.00042, -0.00001, 0.00010, 0.0, 0.0, 0.0],
+        "DGS30_CHANGE": [-0.00004, 0.0, 0.0, 0.0, 0.00048, 0.0, 0.00012, 0.0, 0.0, 0.0],
+        "EURUSD_RETURN": [0.0010, -0.0005, 0.0, 0.0015, -0.0002, 0.0, 0.0, 0.0, 0.0, 0.0045],
+    }
+    loadings = np.array([loading_rows[column] for column in FACTOR_COLUMNS])
+    idio_vol_by_factor = {
+        "SPY_RETURN": 0.0035,
+        "QQQ_RETURN": 0.0040,
+        "IWM_RETURN": 0.0045,
+        "EFA_RETURN": 0.0040,
+        "EEM_RETURN": 0.0055,
+        "VNQ_RETURN": 0.0045,
+        "AAPL_RETURN": 0.0060,
+        "MSFT_RETURN": 0.0050,
+        "NVDA_RETURN": 0.0100,
+        "JPM_RETURN": 0.0060,
+        "JNJ_RETURN": 0.0045,
+        "XOM_RETURN": 0.0060,
+        "LQD_RETURN": 0.0015,
+        "HYG_RETURN": 0.0025,
+        "TIP_RETURN": 0.0018,
+        "GLD_RETURN": 0.0040,
+        "SLV_RETURN": 0.0065,
+        "PPLT_RETURN": 0.0060,
+        "DBC_RETURN": 0.0035,
+        "USO_RETURN": 0.0090,
+        "DGS2_CHANGE": 0.00012,
+        "DGS5_CHANGE": 0.00015,
+        "DGS10_CHANGE": 0.00017,
+        "DGS30_CHANGE": 0.00020,
+        "EURUSD_RETURN": 0.0025,
+    }
+    idio_vol = np.array([idio_vol_by_factor[column] for column in FACTOR_COLUMNS])
     values = latent @ loadings.T + idiosyncratic * idio_vol
-    values[:, :4] = np.clip(values[:, :4], -0.25, 0.25)
-    values[:, 6] = np.clip(values[:, 6], -0.12, 0.12)
+    return_indices = [index for index, column in enumerate(FACTOR_COLUMNS) if column.endswith("_RETURN")]
+    values[:, return_indices] = np.clip(values[:, return_indices], -0.30, 0.30)
+    values[:, FACTOR_COLUMNS.index("EURUSD_RETURN")] = np.clip(
+        values[:, FACTOR_COLUMNS.index("EURUSD_RETURN")], -0.12, 0.12
+    )
 
     index = pd.bdate_range(end=pd.Timestamp(end_date), periods=periods, name="portfolio_date")
     frame = pd.DataFrame(values, index=index, columns=FACTOR_COLUMNS)
@@ -121,7 +190,7 @@ def build_common_calendar(
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Align raw levels and calculate factors without masking missing risk.
 
-    ETF and EURUSD levels define the candidate calendar and are never filled.
+    Market-price and EURUSD levels define the candidate calendar and are never filled.
     Treasury levels alone may be carried forward for a limited documented age.
     """
 
@@ -133,15 +202,13 @@ def build_common_calendar(
 
     normalised = {name: _normalise_series(raw_levels[name], name) for name in LEVEL_COLUMNS}
     non_rate = pd.concat(
-        [normalised[name] for name in ["SPY", "QQQ", "EFA", "GLD", "EURUSD"]],
-        axis=1,
-        join="outer",
+        [normalised[name] for name in RETURN_LEVEL_MAP], axis=1, join="outer"
     )
     candidate = pd.DatetimeIndex(non_rate.dropna(how="any").index).sort_values()
     aligned = non_rate.reindex(candidate)
     quality = pd.DataFrame(index=candidate)
 
-    for rate in ["DGS5", "DGS10"]:
+    for rate in RATE_LEVELS:
         filled, flags, ages = _rate_fill_on_calendar(
             normalised[rate], candidate, max_rate_fill_business_days
         )
@@ -153,10 +220,10 @@ def build_common_calendar(
     quality = quality.reindex(aligned.index)
 
     factors = pd.DataFrame(index=aligned.index)
-    for ticker in ["SPY", "QQQ", "EFA", "GLD", "EURUSD"]:
+    for ticker in RETURN_LEVEL_MAP:
         factors[f"{ticker}_RETURN"] = aligned[ticker].pct_change(fill_method=None)
-    factors["DGS5_CHANGE"] = aligned["DGS5"].diff()
-    factors["DGS10_CHANGE"] = aligned["DGS10"].diff()
+    for rate in RATE_LEVELS:
+        factors[f"{rate}_CHANGE"] = aligned[rate].diff()
     factors = factors[FACTOR_COLUMNS].iloc[1:]
     factors.index.name = "portfolio_date"
 
@@ -229,13 +296,7 @@ def download_live_factors(
 
     inclusive_end = pd.Timestamp(end_date or datetime.now(timezone.utc).date()).normalize()
     yahoo_exclusive_end = str((inclusive_end + timedelta(days=1)).date())
-    ticker_map = {
-        "SPY": "SPY",
-        "QQQ": "QQQ",
-        "EFA": "EFA",
-        "GLD": "GLD",
-        "EURUSD": "EURUSD=X",
-    }
+    ticker_map = RETURN_LEVEL_MAP
     downloaded = yf.download(
         list(ticker_map.values()),
         start=start_date,
@@ -259,7 +320,7 @@ def download_live_factors(
             ) from error
         raw_levels[canonical_name] = series.rename(canonical_name)
 
-    for series_id in ["DGS5", "DGS10"]:
+    for series_id in RATE_LEVELS:
         parameters = urllib.parse.urlencode(
             {
                 "series_id": series_id,
@@ -272,7 +333,7 @@ def download_live_factors(
         )
         request = urllib.request.Request(
             f"https://api.stlouisfed.org/fred/series/observations?{parameters}",
-            headers={"User-Agent": "multi-asset-market-risk-engine/1.0.0"},
+            headers={"User-Agent": "multi-asset-market-risk-engine/1.1.0"},
         )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
@@ -293,7 +354,7 @@ def download_live_factors(
     metadata = {
         "snapshot_id": f"live_common_calendar_asof_{factors.index[-1].date()}",
         "data_classification": "LIVE PROVIDER DATA — REVIEW REDISTRIBUTION TERMS",
-        "source": "Yahoo Finance Adj Close via yfinance; FRED DGS5 and DGS10",
+        "source": "Yahoo Finance Adj Close via yfinance; FRED DGS2, DGS5, DGS10, and DGS30",
         "price_field": "Adj Close",
         "yfinance_auto_adjust": False,
         "fx_quote": "EURUSD = USD per EUR",

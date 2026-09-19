@@ -1,47 +1,70 @@
-version: 1
+version: 2
 data_classification: SYNTHETIC DATA — NOT FOR RESUME RESULTS
-methodology: Artificial endpoint shocks for engineering verification only; replace with a verified real-data crisis archive before making historical claims.
+methodology: Artificial asset-class endpoint shocks for engineering verification only; replace with a verified real-data crisis archive before making historical claims.
 scenarios:
   gfc_lehman_synthetic:
     name: GFC / Lehman Window (Artificial Fixture)
     type: historical_replay_fixture
     horizon: 2008-09-15_to_2008-10-10_multi_day
-    rationale: Tests a severe equity selloff, USD strength, lower yields, and weaker gold.
+    rationale: Tests a severe global equity and credit selloff, USD strength, lower yields, and weaker commodities.
     source: Deterministic artificial fixture; not observed data
+    asset_class_shocks:
+      US Equity: -0.28
+      International Equity: -0.32
+      Emerging Markets Equity: -0.36
+      Real Estate: -0.35
+      Investment Grade Credit: -0.12
+      High Yield Credit: -0.22
+      Inflation-Linked Bonds: -0.06
+      Precious Metals: -0.08
+      Commodities: -0.30
     shocks:
-      SPY_RETURN: -0.28
-      QQQ_RETURN: -0.26
-      EFA_RETURN: -0.32
-      GLD_RETURN: -0.08
+      DGS2_CHANGE: -0.012
       DGS5_CHANGE: -0.010
       DGS10_CHANGE: -0.008
+      DGS30_CHANGE: -0.006
       EURUSD_RETURN: -0.12
   covid_2020_synthetic:
     name: COVID-19 Window (Artificial Fixture)
     type: historical_replay_fixture
     horizon: 2020-02-19_to_2020-03-23_multi_day
-    rationale: Tests a rapid equity drawdown with Treasury rally, gold weakness, and USD strength.
+    rationale: Tests a rapid equity, real-estate, credit, and commodity drawdown with a Treasury rally and USD strength.
     source: Deterministic artificial fixture; not observed data
+    asset_class_shocks:
+      US Equity: -0.34
+      International Equity: -0.36
+      Emerging Markets Equity: -0.33
+      Real Estate: -0.38
+      Investment Grade Credit: -0.10
+      High Yield Credit: -0.20
+      Inflation-Linked Bonds: -0.05
+      Precious Metals: -0.03
+      Commodities: -0.35
     shocks:
-      SPY_RETURN: -0.34
-      QQQ_RETURN: -0.28
-      EFA_RETURN: -0.36
-      GLD_RETURN: -0.03
+      DGS2_CHANGE: -0.012
       DGS5_CHANGE: -0.011
       DGS10_CHANGE: -0.009
+      DGS30_CHANGE: -0.007
       EURUSD_RETURN: -0.05
   inflation_rates_2022_synthetic:
     name: Inflation and Rates Window (Artificial Fixture)
     type: historical_replay_fixture
     horizon: 2022-01-03_to_2022-10-12_multi_day
-    rationale: Tests joint equity and bond losses with a stronger USD.
+    rationale: Tests joint equity, bond, and precious-metal losses with higher yields and a stronger USD.
     source: Deterministic artificial fixture; not observed data
+    asset_class_shocks:
+      US Equity: -0.25
+      International Equity: -0.29
+      Emerging Markets Equity: -0.27
+      Real Estate: -0.30
+      Investment Grade Credit: -0.18
+      High Yield Credit: -0.16
+      Inflation-Linked Bonds: -0.12
+      Precious Metals: -0.09
+      Commodities: 0.12
     shocks:
-      SPY_RETURN: -0.25
-      QQQ_RETURN: -0.34
-      EFA_RETURN: -0.29
-      GLD_RETURN: -0.09
+      DGS2_CHANGE: 0.036
       DGS5_CHANGE: 0.032
       DGS10_CHANGE: 0.024
+      DGS30_CHANGE: 0.018
       EURUSD_RETURN: -0.15
-
